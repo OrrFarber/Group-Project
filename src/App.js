@@ -1,6 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
+import HomePage from "./pages/HomePage";
+
 import { useEffect } from "react";
+import { Routes, Route, NavLink } from 'react-router-dom';
 
 function App() {
   useEffect(() => {
@@ -23,7 +25,13 @@ function App() {
 
   return (
     <div className="App">
-      <h1>hi</h1>
+      <NavLink to='/'>Home</NavLink>
+      <NavLink to='/LoginPage'>Login/Sign up</NavLink>
+
+      <Routes>
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/LoginPage" element={<LoginPage/>}/>
+      </Routes>
     </div>
   );
 }
