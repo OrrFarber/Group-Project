@@ -1,0 +1,61 @@
+.signUp-form{
+    background-color: white;
+    border-radius: 8vh;
+    opacity: 0.85;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+   }
+  
+  .column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:20vw;
+  }
+  .form-wrapper{
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/https://d1e00ek4ebabms.cloudfront.net/production/3328878e-9f85-4874-839f-3a57134e6808.jpg?source=next&fit=scale-down&quality=highest&width=1440');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height:80vh ;
+  }
+  .button-sign {
+    border-radius: 10px;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2vh;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    color: black; 
+    font-family:cursive;
+    border: 2px solid black;
+
+  }
+  .button-sign:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  input{
+    padding: 1rem;
+    margin: 0.1rem;
+  }
+  span{
+    color: red;
+  }
+  .data-cover{
+    background-color: darkseagreen;
+    height: 80vh;
+  }
+  .title{
+    font-family:serif;
+    font-style: italic;
+  }

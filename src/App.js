@@ -1,8 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect } from "react";
+import { createContext } from 'react';
+import ContextData from "./components/ContextData";
+import { Route,Routes } from "react-router";
+import { NavLink } from "react-router-dom";
+import FirstSignIn from "./pages/FirstSignIn";
+export const UserContext=createContext()
 
 function App() {
+  const{userValues, setUserValues}=ContextData()
+  const contextValue={userValues, setUserValues}
   useEffect(() => {
     const options = {
       method: "GET",
@@ -22,9 +29,19 @@ function App() {
   }, []);
 
   return (
+    <UserContext.Provider value={contextValue} >
+
     <div className="App">
       <h1>hi</h1>
+      <NavLink  to="/FirstSignIn">Sign Up </NavLink>
+
     </div>
+    <Routes>
+        {/* <Route path='/' element={<HomePage/>}></Route> */}
+        <Route path='/FirstSignIn' element={<FirstSignIn/>}></Route>
+    </Routes>
+    </UserContext.Provider>
+
   );
 }
 
