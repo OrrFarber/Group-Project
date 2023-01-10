@@ -1,17 +1,19 @@
+import { NavLink } from "react-router-dom";
+import "./NavBar.css";
+
 export default function NavBar() {
   return (
     <div className="NavBar">
-      <ul>
+      <ul className="left-side-nav">
         <img
-          src="C:\Users\orrfa\Desktop\code\group-project\workout-plans\public\Photos\fitness-body-building-logo.webp"
+          src="https://img.freepik.com/premium-vector/fitness-body-building-logo_7085-141.jpg?w=2000"
           alt="fitness logo"
         ></img>
-        <h1>Home</h1>
-      </ul>
+        <li><NavLink>Home</NavLink></li>
+        <li><NavLink>Progress</NavLink></li>
+        <li><NavLink>Details</NavLink></li>
 
-      <ul>
-        <li>Progress</li>
-        <li>Exercises</li>
+  
       </ul>
     </div>
   );

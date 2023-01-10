@@ -1,0 +1,23 @@
+.top button{
+    border: none;
+    border-radius: 20%;
+    background-color: rgba(0, 0, 255, 0.394);
+
+}
+
+.bottom {
+  display: flex;
+  align-content: flex-end;
+  justify-content: space-around;
+  color: rgb(32, 21, 106);
+  margin-bottom: 0;
+}
+
+.bottom h4 {
+  padding: 1vw;
+}
+
+a {
+    width: 100vw;
+    height: 100%;
+}

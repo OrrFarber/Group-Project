@@ -1,5 +1,7 @@
+
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -35,4 +37,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.NavBar button{
+ font-size: 3vw;
 }

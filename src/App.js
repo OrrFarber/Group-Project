@@ -2,6 +2,7 @@ import "./App.css";
 import HomePage from "./pages/HomePage";
 import NavBar from "./pages/NavBar";
 import LoginPage from "./pages/LoginPage";
+import Progress from "./pages/Progress"
 
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
@@ -27,10 +28,12 @@ function App() {
 
   return (
         <div className="App">
-          <NavBar/>
 
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='/LoginPage'>Login/Sign up</NavLink>
+          <div classname="NavBar">
+      <NavLink to='/'><button>Home</button></NavLink>
+      <NavLink to='/LoginPage'><button>Login/Sign up</button></NavLink>
+      <NavLink to='/Progress'><button>Progress</button></NavLink>
+          </div>
 
     
       <Routes>
