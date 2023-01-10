@@ -1,5 +1,7 @@
 import "./App.css";
 import HomePage from "./pages/HomePage";
+import NavBar from "./pages/NavBar";
+import LoginPage from "./pages/LoginPage";
 
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
@@ -24,15 +26,19 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+        <div className="App">
+          <NavBar/>
+
       <NavLink to='/'>Home</NavLink>
       <NavLink to='/LoginPage'>Login/Sign up</NavLink>
 
+    
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/LoginPage" element={<LoginPage/>}/>
       </Routes>
     </div>
+
   );
 }
 
