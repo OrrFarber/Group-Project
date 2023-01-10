@@ -39,6 +39,7 @@
   }
 }
 
-.NavBar button{
- font-size: 3vw;
+.NavBar {
+background-color: #282c34;
+
 }
