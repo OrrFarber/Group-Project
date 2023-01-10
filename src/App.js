@@ -2,10 +2,10 @@ import "./App.css";
 import HomePage from "./pages/HomePage";
 import NavBar from "./pages/NavBar";
 import LoginPage from "./pages/LoginPage";
-import Progress from "./pages/Progress"
+import Progress from "./pages/Progress";
 
 import { useEffect } from "react";
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, NavLink } from "react-router-dom";
 
 function App() {
   useEffect(() => {
@@ -27,21 +27,24 @@ function App() {
   }, []);
 
   return (
-        <div className="App">
+    <div className="App">
+      <div className="topnav nav-bar">
+        <NavLink className="navlink" to="/">
+          Home
+        </NavLink>
+        <NavLink className="navlink" to="/LoginPage">
+          Login/Sign up
+        </NavLink>
+        <NavLink className="navlink" to="/Progress">
+          Progress
+        </NavLink>
+      </div>
 
-          <div classname="NavBar">
-      <NavLink to='/'><button>Home</button></NavLink>
-      <NavLink to='/LoginPage'><button>Login/Sign up</button></NavLink>
-      <NavLink to='/Progress'><button>Progress</button></NavLink>
-          </div>
-
-    
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/LoginPage" element={<LoginPage/>}/>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/LoginPage" element={<LoginPage />} />
       </Routes>
     </div>
-
   );
 }
 

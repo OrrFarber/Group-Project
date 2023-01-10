@@ -1,5 +1,3 @@
-
-
 export default function FitParameters() {
   return (
     <div className="fit-params">

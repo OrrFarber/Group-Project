@@ -1,6 +1,10 @@
+.HomePage{
+    height: 100vh;
+}
+
 .top {
-    width: 100vw;
-    height: 90vh;
+   height: 40vw;
+
 }
 
 .top button{
@@ -16,7 +20,8 @@
   justify-content: space-around;
   color: rgb(219, 219, 219);
   margin-bottom: 0;
-  background-color: rgb(93, 88, 83);
+  background-color: grey;
+  align-items: flex-end;
 }
 
 .bottom h4 {
