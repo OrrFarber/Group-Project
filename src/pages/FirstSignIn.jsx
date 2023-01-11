@@ -2,27 +2,42 @@ import { React, useContext } from "react";
 import { useForm } from "react-hook-form";
 import "./SignUp.css";
 import {UserContext} from "../App"
-
+import { useNavigate } from "react-router";
 function FirstSignIn() {
-
+  const navigate=useNavigate()
   const { userValues, setUserValues} = useContext(UserContext);
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const onSubmit = (data) => {
-    setUserValues(data);
-};
-console.log(userValues)
+    if(IfExist(document.getElementById("user"))){
+    setUserValues([...userValues,data]);
+    navigate("/LoginPage")
+  }
+  console.log(IfExist(document.getElementById("user")))
+
+}
+  
+function IfExist(user){
+for(let i=0;i<userValues.length-1;i++){
+    if(userValues[i]?.userName===user?.value){
+        console.log(userValues[i]?.userName);
+        console.log(user?.value);
+        return false;    
+    }
+}
+return true;
+}
 return (
     <form className=" form-wrapper" onSubmit={handleSubmit(onSubmit)}>
       <div className="signUp-form">
         <div>
           <div className="column">
             <h1 className="title">Sign-Up</h1>
-            <input
+            <input id="user"
               placeholder="User name"
-              {...register("userName", { required: true })}
-            />
+              {...register("userName", { required: true})}
+                />
             {errors.userName && <span>User name is required</span>}
-
+            {(!IfExist(document.getElementById("user")))&&<span>User name is not aveliable</span>}
             <input
               placeholder="First name"
               type="text"
@@ -61,10 +76,16 @@ return (
               {...register("E_Mail", { required: true })}
             />
             {errors.E_Mail && <span>E-mail is required</span>}
-
-         
-
-           <input type="submit" className="button-sign" value="SignUp" />
+            <label >
+        Chose the difficulty level of the exercise:{" "}
+      </label>
+      <select {...register("difficulty", { required: true })}>
+        <option value="beginner">beginner</option>
+        <option value="intermediate">intermediate</option>
+        <option value="expert">expert</option>
+      </select>
+     
+         <input type="submit" className="button-sign" value="SignUp" ></input>
           </div>
         </div>
       </div>
