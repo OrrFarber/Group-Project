@@ -1,0 +1,43 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.all-workouts {
+    margin: 5vw;
+}
+
+.single-workout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.workout-params {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.workout-params p {
+    background-color: rgb(212, 209, 209);
+    padding: 2px 7px;
+    border-radius: 20px;
+}
+
+.workout-instructions p {
+    line-height: 2rem;
+}
+
+.workout-nav-link button {
+    background-color: rgb(254, 55, 55);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}

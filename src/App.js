@@ -1,8 +1,10 @@
-import "./App.css";
+// import "./App.css";
 import HomePage from "./pages/HomePage";
 import ResponsiveAppBar from "./pages/NavBar";
 import LoginPage from "./pages/LoginPage";
 import Progress from "./pages/Progress";
+import WorkoutExercises from "./pages/WorkoutExercises";
+import WorkoutDetails from "./pages/WorkoutDetails";
 
 
 import { useEffect } from "react";
@@ -23,14 +25,14 @@ function App() {
       options
     )
       .then((response) => response.json())
-      .then((response) => console.log(response))
+      // .then((response) => console.log(response))
       .catch((err) => console.error(err));
   }, []);
 
   return (
     <div className="App">
 
-    <ResponsiveAppBar/>
+      <ResponsiveAppBar />
 
       <div className="topnav nav-bar">
         <NavLink className="navlink" to="/">
@@ -48,6 +50,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/LoginPage" element={<LoginPage />} />
       </Routes>
+      {/* <WorkoutExercises /> */}
+      <WorkoutDetails />
     </div>
   );
 }
