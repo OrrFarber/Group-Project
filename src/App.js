@@ -8,9 +8,16 @@ import WorkoutDetails from "./pages/WorkoutDetails";
 
 
 import { useEffect } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink } from 'react-router-dom';
+import { createContext } from 'react';
+
+import ContextData from "./components/ContextData";
+import FirstSignIn from "./pages/FirstSignIn";
+export const UserContext=createContext()
 
 function App() {
+  const{userValues, setUserValues}=ContextData()
+  const contextValue={userValues, setUserValues}
   useEffect(() => {
     const options = {
       method: "GET",
@@ -30,9 +37,10 @@ function App() {
   }, []);
 
   return (
+    <UserContext.Provider value={contextValue} >
+
     <div className="App">
 
-      <ResponsiveAppBar />
 
       <div className="topnav nav-bar">
         <NavLink className="navlink" to="/">
@@ -44,15 +52,20 @@ function App() {
         <NavLink className="navlink" to="/Progress">
           Progress
         </NavLink>
+   <NavLink  to="/FirstSignIn">Sign Up </NavLink>
       </div>
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/LoginPage" element={<LoginPage />} />
-      </Routes>
-      {/* <WorkoutExercises /> */}
+    
+      <WorkoutExercises />
       <WorkoutDetails />
     </div>
+    <Routes>
+      <Route path="/" element={<HomePage/>}/>
+        <Route path="/LoginPage" element={<LoginPage/>}/>
+        <Route path='/FirstSignIn' element={<FirstSignIn/>}></Route>
+    </Routes>
+    </UserContext.Provider>
+
   );
 }
 
