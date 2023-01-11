@@ -49,6 +49,8 @@ function WorkoutDetails() {
             }).catch(err => console.error(err));
     }, [])
 
+    // console.log(process.env.REACT_APP_API_KEY);
+
 
 
 
