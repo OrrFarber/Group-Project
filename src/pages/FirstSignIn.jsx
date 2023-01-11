@@ -6,15 +6,12 @@ import {UserContext} from "../App"
 function FirstSignIn() {
 
   const { userValues, setUserValues} = useContext(UserContext);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors }, } = useForm();
   const onSubmit = (data) => {
-    setUserValues([...userValues, data]);
-  };
-  return (
+    setUserValues(data);
+};
+console.log(userValues)
+return (
     <form className=" form-wrapper" onSubmit={handleSubmit(onSubmit)}>
       <div className="signUp-form">
         <div>
@@ -39,6 +36,24 @@ function FirstSignIn() {
               {...register("lastName", { required: true })}
             />
             {errors.lastName && <span>Last name is required</span>}
+            <input
+              placeholder="Password"
+              type="password"
+              {...register("password", { required: true,minLength:4 })}
+            />
+            {errors.password && <span>Password must be at least 4 chars</span>}
+
+            <input
+              placeholder="Verify password"
+              type="password"
+              {...register("verifyPassword", { required: true,minLength:4 })}
+            />
+            {errors.verifyPassword && <span>Password does not match</span>}
+            <input
+              type="date"
+              {...register("date", { required: true })}
+            />
+            {errors.date && <span>Date of birth is required</span>}
 
             <input
               placeholder="E-mail"
@@ -49,7 +64,7 @@ function FirstSignIn() {
 
          
 
-            <input type="submit" className="button-sign" value="SignUp" />
+           <input type="submit" className="button-sign" value="SignUp" />
           </div>
         </div>
       </div>
