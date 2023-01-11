@@ -33,7 +33,7 @@ function WorkoutExercises() {
         <div className='all-workouts'>
             <h1>All workouts</h1>
 
-            {ApiWorkouts.map(workout =>
+            {ApiWorkouts?.map(workout =>
                 <div className='single-workout'>
                     <div className='workout-params'>
                         <h3>{workout.name}</h3>

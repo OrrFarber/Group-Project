@@ -9,13 +9,7 @@ function LoginPage(){
 
     function Validation(userName,password){
        setClick(true)
-       console.log(userName.value)
-
-for (let i = 1; i < userValues.length; i++) { 
-        console.log(userName.value)
-        console.log(userValues[i].userName)
-        console.log(password.value)
-        console.log(userValues[i].password)  
+for (let i = 0; i < userValues.length; i++) {  
     if(userName.value===userValues[i].userName&&password.value===userValues[i].password){  
         navigate("/") 
         setValid(true)

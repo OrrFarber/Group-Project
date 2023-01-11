@@ -3,9 +3,19 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 export default function ContextData(){
-const userValueFromStorage = JSON.parse(localStorage.getItem('myUser'))
-const [userValues, setUserValues]=useState( userValueFromStorage)
-userValues.length > 1 && localStorage.setItem("myUser", JSON.stringify(userValues));
+// const userValueFromStorage = JSON.parse(localStorage.getItem('myUser'))
+// userValues?.length > 1 && localStorage.setItem("myUser", JSON.stringify(userValues));
+
+const [userValues, setUserValues]=useState([])
+
+// userValues[0].userName='RoeiMaster' 
+// userValues[0].firstName= 'Roei'
+// userValues[0].lastName= 'Shalom'
+// userValues[0].password= '12345'
+// userValues[0].verifyPassword= '12345'
+// userValues[0].date='20/01/2001'
+// userValues[0].E_Mail='roeiz100@walla.com'
+// userValues[0].difficulty='expert'
     let ImagesForApi = [
         {name:"abdominals", image: "https://www.ericfavre.com/lifestyle/uk/wp-content/uploads/sites/15/2021/09/approche-biomecanique-1024x1024-1.jpg"},
         {name:"abductors", image: "https://cdn.muscleandstrength.com/sites/all/themes/mnsnew/images/taxonomy/exercises/muscle-groups/full/Abductors.jpg"},
@@ -22,14 +32,7 @@ userValues.length > 1 && localStorage.setItem("myUser", JSON.stringify(userValue
         {name:"quadriceps", image: "src"},
         {name:"traps", image: "src"},
         {name:"triceps", image: "src"},]
-        //   userValues[0].userName='RoeiMaster' 
-        //   userValues[0].firstName= 'Roei'
-        //   userValues[0].lastName= 'Shalom'
-        //   userValues[0].password= '12345'
-        //   userValues[0].verifyPassword= '12345'
-        //   userValues[0].date='20/01/2001'
-        //   userValues[0].E_Mail='roeiz100@walla.com'
-        //   userValues[0].difficulty='expert'
+         
        
         return{
             userValues, setUserValues,ImagesForApi
