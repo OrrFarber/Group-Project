@@ -1,4 +1,7 @@
 import {  useState } from "react";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 export default function ContextData(){
 const userValueFromStorage = JSON.parse(localStorage.getItem('myUser'))
 const [userValues, setUserValues]=useState( userValueFromStorage)
