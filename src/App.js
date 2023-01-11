@@ -6,11 +6,9 @@ import Progress from "./pages/Progress";
 import WorkoutExercises from "./pages/WorkoutExercises";
 import WorkoutDetails from "./pages/WorkoutDetails";
 
-
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { createContext } from 'react';
-import ContextData from "./components/ContextData";
 import "./App.css";
 import ContextData from "./components/ContextData";
 import FirstSignIn from "./pages/FirstSignIn";
@@ -48,23 +46,22 @@ function App() {
           Home
         </NavLink>
         <NavLink className="navlink" to="/LoginPage">
-          Login/Sign up
+         Login
         </NavLink>
-        <NavLink className="navlink" to="/Progress">
-          Progress
+        <NavLink className="navlink" to="/FirstSignIn">
+          Sign up
         </NavLink>
-   <NavLink  to="/FirstSignIn">Sign Up </NavLink>
+       <NavLink className="navlink" to="/WorkoutExercises">WorkoutExercises </NavLink>
+       <NavLink className="navlink" to="/WorkoutDetails">WorkoutDetails </NavLink>
       </div>
 
     
-      <WorkoutExercises />
-      <WorkoutDetails />
     <div>
     <Routes>
       <Route path="/" element={<HomePage/>}/>
         <Route path="/LoginPage" element={<LoginPage/>}/>
-      <h1>hi</h1>
-     
+     <Route path="/WorkoutExercises" element={<WorkoutExercises/>} />
+     <Route path="/WorkoutDetails" element={<WorkoutDetails/>} />
 
         <Route path='/FirstSignIn' element={<FirstSignIn/>}></Route>
     </Routes>
