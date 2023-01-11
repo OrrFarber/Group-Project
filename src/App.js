@@ -10,7 +10,8 @@ import WorkoutDetails from "./pages/WorkoutDetails";
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { createContext } from 'react';
-
+import ContextData from "./components/ContextData";
+import "./App.css";
 import ContextData from "./components/ContextData";
 import FirstSignIn from "./pages/FirstSignIn";
 export const UserContext=createContext()
@@ -58,12 +59,17 @@ function App() {
     
       <WorkoutExercises />
       <WorkoutDetails />
-    </div>
+    <div>
     <Routes>
       <Route path="/" element={<HomePage/>}/>
         <Route path="/LoginPage" element={<LoginPage/>}/>
+      <h1>hi</h1>
+     
+
         <Route path='/FirstSignIn' element={<FirstSignIn/>}></Route>
     </Routes>
+    </div>
+    </div>
     </UserContext.Provider>
 
   );
