@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "@firebase/firestore";
 const firebaseConfig = {
-  apiKey: "AIzaSyCBdBOCN3LnJ5BdVsrt9FEdC4JjVJtuArc",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "fire-base-f7c53.firebaseapp.com",
   databaseURL: "https://fire-base-f7c53-default-rtdb.firebaseio.com",
   projectId: "fire-base-f7c53",
