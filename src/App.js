@@ -1,8 +1,9 @@
 import "./App.css";
 import HomePage from "./pages/HomePage";
-import NavBar from "./pages/NavBar";
+import ResponsiveAppBar from "./pages/NavBar";
 import LoginPage from "./pages/LoginPage";
 import Progress from "./pages/Progress";
+
 
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
@@ -28,6 +29,9 @@ function App() {
 
   return (
     <div className="App">
+
+    <ResponsiveAppBar/>
+
       <div className="topnav nav-bar">
         <NavLink className="navlink" to="/">
           Home
