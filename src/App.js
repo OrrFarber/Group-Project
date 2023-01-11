@@ -1,8 +1,12 @@
 import "./App.css";
 import HomePage from "./pages/HomePage";
+import ResponsiveAppBar from "./pages/NavBar";
+import LoginPage from "./pages/LoginPage";
+import Progress from "./pages/Progress";
+
 
 import { useEffect } from "react";
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, NavLink } from "react-router-dom";
 
 function App() {
   useEffect(() => {
@@ -25,12 +29,24 @@ function App() {
 
   return (
     <div className="App">
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='/LoginPage'>Login/Sign up</NavLink>
+
+    <ResponsiveAppBar/>
+
+      <div className="topnav nav-bar">
+        <NavLink className="navlink" to="/">
+          Home
+        </NavLink>
+        <NavLink className="navlink" to="/LoginPage">
+          Login/Sign up
+        </NavLink>
+        <NavLink className="navlink" to="/Progress">
+          Progress
+        </NavLink>
+      </div>
 
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/LoginPage" element={<LoginPage/>}/>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/LoginPage" element={<LoginPage />} />
       </Routes>
     </div>
   );
