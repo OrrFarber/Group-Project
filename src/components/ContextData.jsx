@@ -10,6 +10,8 @@ export default function ContextData() {
 
     //NameOfUsersArray:
     const userCollectionRef = collection(db, "User");
+    //NameOfProgressArray:
+    const progressCollectionRef = collection(db, "Progress");
 
     const [conectedUser, setConectedUser] = useState(JSON.parse(localStorage.getItem('myUser')));
     localStorage.setItem("myUser", JSON.stringify(conectedUser));
@@ -17,21 +19,27 @@ export default function ContextData() {
     const [isOnline, setIsOnline] = useState(JSON.parse(localStorage.getItem('online')));
     localStorage.setItem("online", JSON.stringify(isOnline));
 
-    //NameOfProgressArray:
-    const progressCollectionRef = collection(db, "Progress");
     const [userValues, setUserValues] = useState([]);
+    const [userProgress, setUserProgress] = useState([]);
 
     useEffect(() => {
+        //Setting FireBase  data User
         const getUsers = async () => {
             const data = await getDocs(userCollectionRef);
             setUserValues(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
         getUsers();
+        //Setting FireBase data Progress
+        const getUsersProgress = async () => {
+            const data = await getDocs(progressCollectionRef);
+            setUserProgress(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        };
+        getUsersProgress();
     }, []);
 
 
 
-
+    //Api Workouts
     const [ApiWorkouts, setApiWorkouts] = useState([]);
     const muscleForApi = userValues[conectedUser]?.muscleGroup.trim()
     const difficultyForApi = userValues[conectedUser]?.difficulty.trim()
@@ -58,6 +66,7 @@ export default function ContextData() {
     // console.log(muscleGroupp);
     console.log(muscleForApi);
     console.log(difficultyForApi);
+    // console.log(userProgress);
 
 
 
@@ -126,6 +135,8 @@ export default function ContextData() {
         { name: "traps", image: "src" },
         { name: "triceps", image: "src" },
     ];
+    // console.log(userProgress);
+
 
 
     return {
@@ -138,7 +149,10 @@ export default function ContextData() {
         progressCollectionRef,
         isOnline, setIsOnline,
         ApiWorkouts,
-        UserWorkouts
+        UserWorkouts,
+        userProgress,
+        setUserProgress
+
     };
 }
 

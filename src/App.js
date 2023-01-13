@@ -22,9 +22,10 @@ function App() {
     userCollectionRef,
     progressCollectionRef,
     ThisUserRef,
-    isOnline,setIsOnline,
+    isOnline, setIsOnline,
     ApiWorkouts,
-    UserWorkouts
+    UserWorkouts,
+    userProgress, setUserProgress
   } = ContextData();
   const contextValue = {
     userValues,
@@ -33,9 +34,10 @@ function App() {
     userCollectionRef,
     progressCollectionRef,
     ThisUserRef,
-    isOnline,setIsOnline,
+    isOnline, setIsOnline,
     ApiWorkouts,
-    UserWorkouts
+    UserWorkouts,
+    userProgress, setUserProgress
   };
   useEffect(() => {
     const options = {
@@ -54,7 +56,7 @@ function App() {
       // .then((response) => console.log(response))
       .catch((err) => console.error(err));
   }, []);
-   console.log(userValues[conectedUser]?.isOnline);
+  console.log(userValues[conectedUser]?.isOnline);
   return (
     <UserContext.Provider value={contextValue}>
       <div className="App">
@@ -74,7 +76,7 @@ function App() {
             <NavLink className="navlink" to={`/WorkoutExercises/${userValues[conectedUser]?.firstName}`}>
               WorkoutExercises{" "}
             </NavLink>
-         )} 
+          )}
           <NavLink className="navlink" to="/WorkoutDetails">
             WorkoutDetails{" "}
           </NavLink>
@@ -85,7 +87,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/LoginPage" element={<LoginPage />} />
             <Route path="/WorkoutExercises/:firstName" element={<WorkoutExercises />} />
-            <Route path="/WorkoutDetails" element={<WorkoutDetails />} />
+            <Route path="/WorkoutDetails/:WorkoutName" element={<WorkoutDetails />} />
 
             <Route path="/FirstSignIn" element={<FirstSignIn />}></Route>
           </Routes>

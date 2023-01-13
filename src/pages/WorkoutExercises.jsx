@@ -8,24 +8,24 @@ import { useContext } from "react";
 import { set } from "react-hook-form";
 
 function WorkoutExercises() {
-  const { userValues, conectedUser,ApiWorkouts,
+  const { userValues, conectedUser, ApiWorkouts,
     UserWorkouts } = useContext(UserContext);
   const [difficulty, setDifficulty] = useState("");
   const [exerciseType, setExerciseType] = useState("");
   const [muscleGroup, setMuscleGroup] = useState("");
 
-  
+
   console.log(ApiWorkouts);
- 
+
   return (
     <div className="all-workouts">
       <h1>All workouts</h1>
-      <button onClick={()=>UserWorkouts()}>show excrercise</button>
+      <button onClick={() => UserWorkouts()}>show excrercise</button>
       {userValues[conectedUser]?.muscleGroup}
 
       {ApiWorkouts?.map((workout) => (
         <div className="single-workout">
-          <div  className="workout-params">
+          <div className="workout-params">
             <h3>{workout.name}</h3>
             <p>{workout.difficulty}</p>
             <p>{workout.equipment}</p>
@@ -36,7 +36,7 @@ function WorkoutExercises() {
             <p>{workout.instructions}</p>
           </div>
           <div className="workout-nav-link">
-            <NavLink to={`workout/${workout.name}`}>
+            <NavLink to={`/WorkoutDetails/${workout.name}`} state={{ singleWorkout: workout }}>
               <button>Start Workout</button>
             </NavLink>
           </div>
