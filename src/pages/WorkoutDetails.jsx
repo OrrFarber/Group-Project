@@ -44,6 +44,10 @@ function WorkoutDetails() {
 
 
 
+
+
+
+
     //TIMRER PROPERTIES
 
     const [time, setTime] = useState(10)

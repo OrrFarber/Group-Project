@@ -42,23 +42,7 @@ function App() {
     UserWorkouts,
     userProgress, setUserProgress
   };
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "9796feb253msh65f876a3c1039f8p1facffjsnb9a3c57b73f1",
-        "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com",
-      },
-    };
 
-    fetch(
-      "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=biceps",
-      options
-    )
-      .then((response) => response.json())
-      // .then((response) => console.log(response))
-      .catch((err) => console.error(err));
-  }, []);
   console.log(userValues[conectedUser]?.isOnline);
   return (
     <UserContext.Provider value={contextValue}>
