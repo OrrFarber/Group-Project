@@ -154,9 +154,10 @@ function WorkoutDetails() {
                 )}
             </div>
 
-
         </div>
+      
     )
+      
 }
 
-export default WorkoutDetails
+export default WorkoutDetails;

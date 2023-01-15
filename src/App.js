@@ -2,7 +2,6 @@
 import HomePage from "./pages/HomePage";
 import ResponsiveAppBar from "./pages/NavBar";
 import LoginPage from "./pages/LoginPage";
-import Progress from "./pages/Progress";
 import WorkoutExercises from "./pages/WorkoutExercises";
 import WorkoutDetails from "./pages/WorkoutDetails";
 
@@ -10,6 +9,8 @@ import { useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { createContext } from "react";
 import "./App.css";
+import Chart from "./pages/Chart"
+
 import ContextData from "./components/ContextData";
 import FirstSignIn from "./pages/FirstSignIn";
 export const UserContext = createContext();
@@ -74,12 +75,17 @@ function App() {
           </NavLink>
           {isOnline && (
             <NavLink className="navlink" to={`/WorkoutExercises/${userValues[conectedUser]?.firstName}`}>
-              WorkoutExercises{" "}
+              WorkoutExercises
             </NavLink>
           )}
           <NavLink className="navlink" to="/WorkoutDetails">
-            WorkoutDetails{" "}
+            WorkoutDetails
           </NavLink>
+          <NavLink to="/Chart">Progress Chart</NavLink>
+          <NavLink className="navlink" to="/Progress">
+            Progress
+          </NavLink>
+
         </div>
 
         <div>
@@ -88,8 +94,9 @@ function App() {
             <Route path="/LoginPage" element={<LoginPage />} />
             <Route path="/WorkoutExercises/:firstName" element={<WorkoutExercises />} />
             <Route path="/WorkoutDetails/:WorkoutName" element={<WorkoutDetails />} />
-
             <Route path="/FirstSignIn" element={<FirstSignIn />}></Route>
+            <Route path="/Chart" element={<Chart />} />
+
           </Routes>
         </div>
       </div>
