@@ -7,16 +7,38 @@ import WorkoutExercises from "./pages/WorkoutExercises";
 import WorkoutDetails from "./pages/WorkoutDetails";
 
 import { useEffect } from "react";
-import { Routes, Route, NavLink } from 'react-router-dom';
-import { createContext } from 'react';
+import { Routes, Route, NavLink } from "react-router-dom";
+import { createContext } from "react";
 import "./App.css";
 import ContextData from "./components/ContextData";
 import FirstSignIn from "./pages/FirstSignIn";
-export const UserContext=createContext()
+export const UserContext = createContext();
 
 function App() {
-  const{userValues, setUserValues}=ContextData()
-  const contextValue={userValues, setUserValues}
+  const {
+    userValues,
+    setUserValues,
+    conectedUser, setConectedUser,
+    userCollectionRef,
+    progressCollectionRef,
+    ThisUserRef,
+    isOnline, setIsOnline,
+    ApiWorkouts,
+    UserWorkouts,
+    userProgress, setUserProgress
+  } = ContextData();
+  const contextValue = {
+    userValues,
+    setUserValues,
+    conectedUser, setConectedUser,
+    userCollectionRef,
+    progressCollectionRef,
+    ThisUserRef,
+    isOnline, setIsOnline,
+    ApiWorkouts,
+    UserWorkouts,
+    userProgress, setUserProgress
+  };
   useEffect(() => {
     const options = {
       method: "GET",
@@ -34,41 +56,44 @@ function App() {
       // .then((response) => console.log(response))
       .catch((err) => console.error(err));
   }, []);
-
+  console.log(userValues[conectedUser]?.isOnline);
   return (
-    <UserContext.Provider value={contextValue} >
+    <UserContext.Provider value={contextValue}>
+      <div className="App">
+        <div className="topnav nav-bar">
+          <NavLink className="navlink" to="/">
+            Home
+          </NavLink>
+          {!isOnline && (
+            <NavLink className="navlink" to="/LoginPage">
+              Login
+            </NavLink>
+          )}
+          <NavLink className="navlink" to="/FirstSignIn">
+            Sign up
+          </NavLink>
+          {isOnline && (
+            <NavLink className="navlink" to={`/WorkoutExercises/${userValues[conectedUser]?.firstName}`}>
+              WorkoutExercises{" "}
+            </NavLink>
+          )}
+          <NavLink className="navlink" to="/WorkoutDetails">
+            WorkoutDetails{" "}
+          </NavLink>
+        </div>
 
-    <div className="App">
+        <div>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/LoginPage" element={<LoginPage />} />
+            <Route path="/WorkoutExercises/:firstName" element={<WorkoutExercises />} />
+            <Route path="/WorkoutDetails/:WorkoutName" element={<WorkoutDetails />} />
 
-
-      <div className="topnav nav-bar">
-        <NavLink className="navlink" to="/">
-          Home
-        </NavLink>
-        <NavLink className="navlink" to="/LoginPage">
-         Login
-        </NavLink>
-        <NavLink className="navlink" to="/FirstSignIn">
-          Sign up
-        </NavLink>
-       <NavLink className="navlink" to="/WorkoutExercises">WorkoutExercises </NavLink>
-       <NavLink className="navlink" to="/WorkoutDetails">WorkoutDetails </NavLink>
+            <Route path="/FirstSignIn" element={<FirstSignIn />}></Route>
+          </Routes>
+        </div>
       </div>
-
-    
-    <div>
-    <Routes>
-      <Route path="/" element={<HomePage/>}/>
-        <Route path="/LoginPage" element={<LoginPage/>}/>
-     <Route path="/WorkoutExercises" element={<WorkoutExercises/>} />
-     <Route path="/WorkoutDetails" element={<WorkoutDetails/>} />
-
-        <Route path='/FirstSignIn' element={<FirstSignIn/>}></Route>
-    </Routes>
-    </div>
-    </div>
     </UserContext.Provider>
-
   );
 }
 
