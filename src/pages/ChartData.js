@@ -1,9 +1,9 @@
 
-
 export const data = [
+  
     {
-        date: "2023-04-05",
-        abdominals: 1,
+        date: "2023-04",
+        abdominals: 2,
         abductors: 1,
         biceps: 2,
         calves: 3,
@@ -20,7 +20,7 @@ export const data = [
         triceps: 1
       },
       {
-        date: "2023-01-02",
+        date: "2023-03",
         abdominals: 4,
         abductors: 6,
         biceps: 2,
@@ -38,13 +38,32 @@ export const data = [
         triceps: 1
       },
       {
-        date: "2023-01-04",
+        date: "2023-02",
         abdominals: 4,
         abductors: 0,
         biceps: 2,
         calves: 5,
         chest: 1,
         forearms: 4,
+        glutes: 1,
+        hamstrings: 2,
+        lats: 3,
+        lower_back: 0,
+        middle_back: 1,
+        neck: 0,
+        quadriceps:1,
+        traps: 3,
+        triceps: 1
+      },
+    
+      {
+        date: "2023-06",
+        abdominals: 6,
+        abductors: 0,
+        biceps: 2,
+        calves: 5,
+        chest: 1,
+        forearms: 6,
         glutes: 1,
         hamstrings: 2,
         lats: 3,

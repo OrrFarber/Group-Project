@@ -13,6 +13,8 @@ import Chart from "./pages/Chart"
 
 import ContextData from "./components/ContextData";
 import FirstSignIn from "./pages/FirstSignIn";
+import Footer from "./pages/footer";
+
 export const UserContext = createContext();
 
 function App() {
@@ -82,9 +84,7 @@ function App() {
             WorkoutDetails
           </NavLink>
           <NavLink to="/Chart">Progress Chart</NavLink>
-          <NavLink className="navlink" to="/Progress">
-            Progress
-          </NavLink>
+
 
         </div>
 
@@ -99,6 +99,7 @@ function App() {
 
           </Routes>
         </div>
+        {/* <Footer/> */}
       </div>
     </UserContext.Provider>
   );
