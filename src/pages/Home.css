@@ -18,10 +18,11 @@
   display: flex;
   align-content: flex-end;
   justify-content: space-around;
-  color: rgb(219, 219, 219);
+  color: rgb(0, 0, 0);
   margin-bottom: 0;
   background-color: grey;
   align-items: flex-end;
+  margin-top: 5vw;
 }
 
 .bottom h4 {
