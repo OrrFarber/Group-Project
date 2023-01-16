@@ -65,7 +65,6 @@ function App() {
           position="sticky"
           sx={{
             backgroundColor: "black",
-            position: "stickey",
             top: 0,
             width: "100vw",
           }}

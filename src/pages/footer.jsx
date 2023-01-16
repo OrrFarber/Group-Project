@@ -18,9 +18,9 @@ export default function Footer() {
         bottom: 0,
       }}
     >
-      <Typography color="primary" variant="h6">
+      {/* <Typography color="primary" variant="h6">
         Contact us via:
-      </Typography>
+      </Typography> */}
       <FacebookIcon color="primary" />
       <InstagramIcon color="primary" />
       <TwitterIcon color="primary" />
