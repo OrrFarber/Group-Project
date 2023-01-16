@@ -47,6 +47,10 @@ export default function Chart() {
       console.log(tempArr, "this")
       setStepBar(tempArr.workouts.length)
     }
+    if (tempArr.workouts.length > 7) {
+      setStepBar(7)
+    }
+
   }
 
 
@@ -143,7 +147,7 @@ export default function Chart() {
     'np pain no gain'
   ];
   return (
-    <div style={{ height: `${height}vw`, width: "100vw" }}>
+    <div style={{ height: `${height}vwד`, width: "100vw" }}>
       {/* <p>{getMonthToChart}</p> */}
       {isLoading ? <p>Loading</p> :
         <>

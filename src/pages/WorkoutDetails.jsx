@@ -14,7 +14,6 @@ function WorkoutDetails() {
     const { userProgress, userValues, conectedUser, ApiWorkouts } = useContext(UserContext)
     const [isLoading, setIsLoading] = useState(false)
     const date = new Date()
-    // console.log(date.get())
     const fullDate = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()}`
     const [workoutProgress, setWorkoutProgress] = useState([])
     //START OF THE USE EFFECT
