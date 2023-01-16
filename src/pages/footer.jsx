@@ -12,10 +12,11 @@ export default function Footer() {
       sx={{
         backgroundColor: "black",
         justifyContent: "space-around",
-        marginTop: "16",
-        position: "fixed",
         width: "100vw",
-        bottom: 0,
+        position: "absolute", 
+        height: '3rem',
+        marginTop: '2rem',
+        
       }}
     >
       {/* <Typography color="primary" variant="h6">

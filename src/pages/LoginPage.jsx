@@ -90,7 +90,7 @@ function LoginPage() {
       </Button>
       <br />
       {click && !isOnline && (
-        <Typography align="center" color="primary" variant="variant">
+        <Typography align="center" color="error" variant="variant">
           Your user name or password are incorrect
         </Typography>
       )}

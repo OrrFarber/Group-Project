@@ -7,16 +7,14 @@ import EditPage from "./pages/EditPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import WorkoutExercises from "./pages/WorkoutExercises";
-import ContextData from "./components/ContextData";
-import FirstSignIn from "./pages/FirstSignIn";
 import WorkoutDetails from "./pages/WorkoutDetails";
 import Nowhere from "./pages/404";
 
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { createContext } from "react";
-import { Toolbar, Button } from "@mui/material";
-import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
+import { Toolbar, Button, Box } from "@mui/material";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 export const UserContext = createContext();
 
@@ -58,8 +56,9 @@ function App() {
 
   console.log(userValues[conectedUser]?.isOnline);
   return (
-    <UserContext.Provider value={values}>
-      <div className="App">
+    <UserContext.Provider value={contextValue}>
+      <div className="App" style={{minHeight:"100vh"}}>
+      <Box >
         <Toolbar
           color="inherit"
           position="sticky"
@@ -69,11 +68,11 @@ function App() {
             width: "100vw",
           }}
         >
-          <SportsBasketballIcon color="primary" />
+          <FitnessCenterIcon color="primary" />
           <Button
             LinkComponent={NavLink}
             to="/"
-            sx={{ m: 2 }}
+            sx={{ m: 2}}
             size="small"
             fullWidth="true"
             color="primary"
@@ -114,7 +113,7 @@ function App() {
               Workout Exercises
             </Button>
           )}
-          <Button
+          {/* <Button
             className="navlink"
             LinkComponent={NavLink}
             sx={{ m: 2 }}
@@ -124,7 +123,7 @@ function App() {
             to="/WorkoutDetails"
           >
             Workout Details
-          </Button>
+          </Button> */}
           <Button
             LinkComponent={NavLink}
             sx={{ m: 2 }}
@@ -146,7 +145,7 @@ function App() {
             Edit Page
           </Button>
         </Toolbar>
-
+         
         <div>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -156,6 +155,7 @@ function App() {
               element={<WorkoutExercises />}
             />
             <Route
+    
               path="/WorkoutDetails/:WorkoutName"
               element={<WorkoutDetails />}
             />
@@ -165,7 +165,9 @@ function App() {
             <Route path="*" element={<Nowhere />} />
           </Routes>
         </div>
-        <Footer />
+        
+        <Footer className="footer"/>
+      </Box>
       </div>
     </UserContext.Provider>
   );
