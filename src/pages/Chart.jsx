@@ -1,118 +1,69 @@
 import { ResponsiveBar } from "@nivo/bar";
 import { useState } from "react";
 import { data } from "./ChartData";
+import { UserContext } from '../App'
+import React, { useContext } from 'react'
+import { useEffect } from 'react'
+import ContextData from "../components/ContextData";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Box from '@mui/material/Box';
 
 export default function Chart() {
-  let WorkoutArrey = [
-    {
-      date: "2023-01-01",
-      workouts: [
-        {
-          muscle: "biceps",
-        },
-        {
-          muscle: "lats",
-        },
-        {
-          muscle: "hamstrings",
-        },
-      ],
-    },
-    {
-      date: "2023-01-03",
-      workouts: [
-        {
-          muscle: "biceps",
-        },
-        {
-          muscle: "lats",
-        },
-      ],
-    },
-    {
-      date: "2023-01-04",
-      workouts: [
-        {
-          muscle: "biceps",
-        },
-        {
-          muscle: "hamstrings",
-        },
-      ],
-    },
-    {
-      date: "2023-04-05",
-      workouts: [
-        {
-          muscle: "biceps",
-        },
-        {
-          muscle: "hamstrings",
-        },
-        {
-          muscle: "hamstrings",
-        },
-        {
-          muscle: "hamstrings",
-        },
-        {
-          muscle: "hamstrings",
-        },
-        {
-          muscle: "hamstrings",
-        },
-        {
-          muscle: "forearms",
-        },
-      ],
-    },
-  ];
+  const { userProgress, userValues, conectedUser, ApiWorkouts } = useContext(UserContext)
+  const [dataUser, setDataUser] = useState([])
+  const [DataProgressUser, setDataProgressUser] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [stepBar, setStepBar] = useState(true)
+  const date = new Date()
+  const fullDate = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()}`
+  let dt;
 
-  function getMonthToChart() {
-    // const temp=WorkoutArrey.filter(work=>{
-    //     constyear =work.date.split('-')
-    // })
-    // const tempDate=WorkoutArrey.map(work=>work.date.split('-'))
+  useEffect(() => {
+    setIsLoading(true)
+    if (!userProgress.length || !userValues.length || !conectedUser) return setIsLoading(true)
+    console.log(userProgress, userValues, conectedUser);
+    const tempUser = userProgress.find(item => userValues[conectedUser].userName == item.userName);
+    setDataProgressUser(tempUser?.progress);
+    dt = tempUser?.progress
+    console.log("this is", dt);
+    StepBar(dt)
+    GetMuch(dt, "2023")
+    setIsLoading(false)
 
-    let years = ["2020", "2021", "2022", "2023", "2024"];
-    years.forEach((year) => {
-      console.log(year);
-      months.forEach((month) => {
-        console.log(month);
-        // const tempArr = WorkoutArrey.filter((item) => {
-        //     const date = item.date.split("-");
 
-        //     return date[1] == month && date[0] == year;
-        // })
-        //     .filter((item) =>
-        //         item.workouts.find((workout) => workout.muscle == "hamstrings")
-        //     );
-        //     const MuscleType = tempArr.map((item) =>
-        //         item.workouts.filter((item) => item.muscle == "hamstrings")
-        //     );
 
-        //     let sum = 0;
-        //     for (let i = 0; i < MuscleType.length; i++) {
-        //         sum = sum + MuscleType[i].length;
-        //     }
-        //     console.log(sum);
-        // });
-      });
-    });
 
-    //    const dateByMonth = WorkoutArrey.map()date.split("-");
-    //    console.log(dateByMonth[0]+" "+dateByMonth[1])
+    // asd 
+  }, [conectedUser, userProgress, userValues])
+  console.log(DataProgressUser);
+  // dsf 
+  function StepBar(dt) {
+    const tempArr = dt.find(item => item.date = fullDate)
+    if (!tempArr.workouts.length) {
+      setStepBar(0)
+    } else {
+      console.log(tempArr, "this")
+      setStepBar(tempArr.workouts.length)
+    }
+    if (tempArr.workouts.length > 7) {
+      setStepBar(7)
+    }
+
   }
+
+
   let months = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
     "10",
     "11",
     "12",
@@ -138,9 +89,11 @@ export default function Chart() {
   const [monthGraph, setMonthGraph] = useState([]);
   //   const [ter,setTer]=useState()
   function GetMuch(arr, year) {
+    const MMM = dataUser
     months.forEach((month) => {
       let graph = {};
       muscles.forEach((muc) => {
+        console.log(arr)
         const filteredByDate = filterByDate(arr, year, month);
         const numOfTimes = filterByType(filteredByDate, muc);
         graph.date = `${year}-${month}`;
@@ -148,130 +101,159 @@ export default function Chart() {
         console.log(list);
       });
       list.push(graph);
+      MMM.push(graph)
+      setDataUser(MMM)
     });
   }
+  // console.log(dataUser);
 
   function filterByDate(arr, year, month) {
-    const tempArr = arr.filter((item) => {
+    const tempArr = arr?.filter((item) => {
       const date = item.date.split("-");
       return date[1] == month && date[0] == year;
     });
-    console.log(tempArr);
+    console.log(arr);
     return tempArr;
   }
   function filterByType(arr, muscleType) {
-    const MuscleType = arr.map((item) =>
+    const MuscleType = arr?.map((item) =>
       item.workouts.filter((item) => item.muscle == muscleType)
     );
     let sum = 0;
-    for (let i = 0; i < MuscleType.length; i++) {
-      sum = sum + MuscleType[i].length;
+    for (let i = 0; i < MuscleType?.length; i++) {
+      sum = sum + MuscleType[i]?.length;
     }
     console.log(sum);
     return sum;
   }
   let height = data.length * 5;
   let symbolSize = data.length * 6;
+  // console.log(data);
+  // console.log(list);
+  // console.log(dataUser + "asd")
 
   // function ExdercisesByMuscle (){
-  //     for (keys === WorkoutArrey.workouts) {
-  //         return WorkoutArrey.workouts.muscle("").length
+  //     for (keys === DataProgressUser.workouts) {
+  //         return DataProgressUser.workouts.muscle("").length
   //     }
   // }
-
+  const steps = [
+    'greate start',
+    '5 more ',
+    'you got it',
+    '3 left',
+    'almost 1',
+    'the last one',
+    'np pain no gain'
+  ];
   return (
-    <div style={{ height: `${height}vw`, width: "100vw" }}>
+    <div style={{ height: `${height}vwד`, width: "100vw" }}>
       {/* <p>{getMonthToChart}</p> */}
-      <button onClick={() => GetMuch(WorkoutArrey, "2023")}>clcickkck</button>
-      {console.log(monthGraph)}
-      <h1>Monthly workouts by muscle:</h1>
-      <ResponsiveBar
-        data={data}
-        keys={[
-          "abdominals",
-          "abductors",
-          "biceps",
-          "calves",
-          "chest",
-          "forearms",
-          "glutes",
-          "hamstrings",
-          "lats",
-          "lower_back",
-          "middle_back",
-          "neck",
-          "quadriceps",
-          "traps",
-          "triceps",
-        ]}
-        indexBy="date"
-        margin={{ top: 50, right: 130, bottom: 50, left: 100 }}
-        padding={0.3}
-        groupMode="stacked"
-        layout="horizontal"
-        valueScale={{ type: "linear" }}
-        indexScale={{ type: "band", round: true }}
-        colors={{ scheme: "paired" }}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", 1.6]],
-        }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "Date of exercise",
-          legendPosition: "middle",
-          legendOffset: 32,
-        }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "",
-          legendPosition: "middle",
-          legendOffset: -30,
-        }}
-        labelSkipWidth={"12rem"}
-        labelSkipHeight={"12rem"}
-        labelTextColor={{
-          from: "color",
-          modifiers: [["darker", 1.6]],
-        }}
-        role="application"
-        ariaLabel="Nivo bar chart demo"
-        barAriaLabel={function (e) {
-          return (
-            e.id + ": " + e.formattedValue + " in country: " + e.indexValue
-          );
-        }}
-        legends={[
-            {
-              dataFrom: "keys",
-              anchor: "top",
-              direction: "row",
-              justify: true,
-              translateX: -26,
-              translateY: -38,
-              itemsSpacing: 0,
-              itemWidth: 63,
-              itemHeight: 35,
-              itemDirection: "top-to-bottom",
-              itemOpacity: 0.85,
-              symbolSize: `${symbolSize}`,
-              effects: [
-                {
-                  on: "hover",
-                  style: {
-                    itemOpacity: 1,
+      {isLoading ? <p>Loading</p> :
+        <>
+          <button onClick={() => GetMuch(DataProgressUser, "2023")}>clcickkck</button>
+
+          {/* {console.log(monthGraph)} */}
+          <h1>Monthly workouts by muscle:</h1>
+          <ResponsiveBar
+            // asd 
+            data={dataUser}
+            keys={[
+              "abdominals",
+              "abductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower_back",
+              "middle_back",
+              "neck",
+              "quadriceps",
+              "traps",
+              "triceps",
+            ]}
+            indexBy="date"
+            margin={{ top: 50, right: 130, bottom: 50, left: 100 }}
+            padding={0.3}
+            groupMode="stacked"
+            layout="horizontal"
+            valueScale={{ type: "linear" }}
+            indexScale={{ type: "band", round: true }}
+            colors={{ scheme: "paired" }}
+            borderColor={{
+              from: "color",
+              modifiers: [["darker", 1.6]],
+            }}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: "Date of exercise",
+              legendPosition: "middle",
+              legendOffset: 32,
+            }}
+            axisLeft={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: "",
+              legendPosition: "middle",
+              legendOffset: -30,
+            }}
+            labelSkipWidth={"12rem"}
+            labelSkipHeight={"12rem"}
+            labelTextColor={{
+              from: "color",
+              modifiers: [["darker", 1.6]],
+            }}
+            role="application"
+            ariaLabel="Nivo bar chart demo"
+            barAriaLabel={function (e) {
+              return (
+                e.id + ": " + e.formattedValue + " in country: " + e.indexValue
+              );
+            }}
+            legends={[
+              {
+                dataFrom: "keys",
+                anchor: "top",
+                direction: "row",
+                justify: true,
+                translateX: -26,
+                translateY: -38,
+                itemsSpacing: 0,
+                itemWidth: 63,
+                itemHeight: 35,
+                itemDirection: "top-to-bottom",
+                itemOpacity: 0.85,
+                symbolSize: `${symbolSize}`,
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemOpacity: 1,
+                    },
                   },
-                },
-              ],
-            },
-          ]}
-      />
+                ],
+              },
+            ]}
+          />
+        </>
+      }
+      <Box sx={{ width: '100%' }}>
+        <Stepper activeStep={stepBar} alternativeLabel>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel color="white">{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </Box>
     </div>
   );
 }

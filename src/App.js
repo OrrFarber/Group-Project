@@ -58,7 +58,7 @@ function App() {
 
   console.log(userValues[conectedUser]?.isOnline);
   return (
-    <UserContext.Provider value={contextValue}>
+    <UserContext.Provider value={values}>
       <div className="App">
         <Toolbar
           color="inherit"

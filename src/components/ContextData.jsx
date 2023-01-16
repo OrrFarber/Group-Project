@@ -31,12 +31,14 @@ export default function ContextData() {
             setUserValues(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
         getUsers();
+
         //Setting FireBase data Progress
         const getUsersProgress = async () => {
             const data = await getDocs(progressCollectionRef);
             setUserProgress(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
         getUsersProgress();
+
     }, []);
 
 

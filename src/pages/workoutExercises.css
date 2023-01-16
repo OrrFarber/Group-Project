@@ -1,3 +1,8 @@
+/* @import "rsuite/dist/rsuite.css"; */
+/* span {
+    color:;
+} */
+
 body {
     padding: 0;
     margin: 0;
@@ -334,4 +339,11 @@ body {
         stroke-dashoffset: 0;
 
     }
+}
+
+
+
+.byn-wrapperch {
+    display: none;
+    /* font-size: 20rem; */
 }
