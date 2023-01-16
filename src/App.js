@@ -4,17 +4,16 @@ import ResponsiveAppBar from "./pages/NavBar";
 import LoginPage from "./pages/LoginPage";
 import WorkoutExercises from "./pages/WorkoutExercises";
 import WorkoutDetails from "./pages/WorkoutDetails";
-
+import Nowhere from "./pages/404";
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { createContext } from "react";
 import "./App.css";
 import Chart from "./pages/Chart"
-
 import ContextData from "./components/ContextData";
 import FirstSignIn from "./pages/FirstSignIn";
 import Footer from "./pages/footer";
-
+import EditPage from "./pages/EditPage";
 export const UserContext = createContext();
 
 function App() {
@@ -28,7 +27,9 @@ function App() {
     isOnline, setIsOnline,
     ApiWorkouts,
     UserWorkouts,
-    userProgress, setUserProgress
+    userProgress, setUserProgress,
+    offline,
+    setTakeParms,
   } = ContextData();
   const contextValue = {
     userValues,
@@ -40,7 +41,9 @@ function App() {
     isOnline, setIsOnline,
     ApiWorkouts,
     UserWorkouts,
-    userProgress, setUserProgress
+    userProgress, setUserProgress,
+    offline,
+    setTakeParms,
   };
 
   console.log(userValues[conectedUser]?.isOnline);
@@ -60,7 +63,7 @@ function App() {
             Sign up
           </NavLink>
           {isOnline && (
-            <NavLink className="navlink" to={`/WorkoutExercises/${userValues[conectedUser]?.firstName}`}>
+            <NavLink className="navlink" to={`/WorkoutExercises/${userValues[conectedUser]?.userName}`}>
               WorkoutExercises
             </NavLink>
           )}
@@ -68,7 +71,7 @@ function App() {
             WorkoutDetails
           </NavLink>
           <NavLink to="/Chart">Progress Chart</NavLink>
-
+          {isOnline && (<NavLink to="/EditPage">Edit user</NavLink>)}
 
         </div>
 
@@ -76,11 +79,12 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/LoginPage" element={<LoginPage />} />
-            <Route path="/WorkoutExercises/:firstName" element={<WorkoutExercises />} />
+            <Route path="/WorkoutExercises/:userName" element={<WorkoutExercises />} />
             <Route path="/WorkoutDetails/:WorkoutName" element={<WorkoutDetails />} />
-            <Route path="/FirstSignIn" element={<FirstSignIn />}></Route>
+            <Route path="/FirstSignIn" element={<FirstSignIn />}/>
             <Route path="/Chart" element={<Chart />} />
-
+            <Route path="/EditPage" element={<EditPage/>}/>
+            <Route path="*" element={<Nowhere/>}/>
           </Routes>
         </div>
         {/* <Footer/> */}

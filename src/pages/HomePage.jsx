@@ -4,6 +4,7 @@ import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router";
 import { updateDoc,doc } from "@firebase/firestore";
 import { db } from "../firebase/config";
+import BodyParts from "./BodyParts";
 export default function HomePage() {
   const { userValues, userIndex,conectedUser,isOnline,setIsOnline } =useContext(UserContext);
   const navigate = useNavigate();
@@ -24,8 +25,9 @@ export default function HomePage() {
         {isOnline && (
           <h1>Hello {userValues[conectedUser]?.firstName}</h1>
         )}
+            {isOnline&&<BodyParts></BodyParts>}
       </div>
-      <div></div>
+       
       <div className="bottom">
         <h4>Get help</h4>
         <h4>About</h4>

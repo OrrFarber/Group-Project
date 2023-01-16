@@ -4,10 +4,10 @@ import "./SignUp.css";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router";
 import { db } from "../firebase/config";
-import { collection, getDocs, doc, addDoc,updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, addDoc,updateDoc, deleteDoc } from "firebase/firestore";
 import { async } from "q";
 
-function FirstSignIn() {
+function EditPage() {
   const navigate = useNavigate();
   const [click, setClick] = useState(false);
   const [newUserName, setNewUserName] = useState("");
@@ -33,7 +33,8 @@ function FirstSignIn() {
     userCollectionRef,
     workoutCollectionRef,
     progressCollectionRef,
-    userIndex
+    userIndex,
+    conectedUser
   } = useContext(UserContext);
 
   const checkUserName = () => {
@@ -107,47 +108,52 @@ function FirstSignIn() {
       checkDiffuculty()
     );
   };
-  
-  const createUser = async () => {
+  const updateUser=async()=>{
+    console.log(userValues[conectedUser].id);
     setClick(true);
-    setNewIsOnline(false);
-   
-    setNewUserIndex(userValues.length)
-    if(checkAll()){
-      (await addDoc(userCollectionRef, {
-        userName: newUserName,
-        firstName: newFirstName,
-        lastName: newLastName,
-        password: newPassword,
-        verifyPassword: newVerifyPassword,
-        date: newDate,
-        email: newEmail,
-        gender: newGender,
-        weight: newWeight,
-        difficulty: newDifficulty,
-        exerciseType: newExerciseType,
-        muscleGroup: newMuscleGroup,
-        height: newHeight,
-        goal: newGoal,
-        isOnline: false,
-        userIndex:newUserIndex,
-      }));
-    await addDoc(progressCollectionRef, {
-      userName: newUserName,
-      progress: [],
-    });
+if(checkAll()){
+const userDoc=doc(db,"User",userValues[conectedUser].id)
+const newFields={userName: newUserName,
+  firstName: newFirstName,
+  lastName: newLastName,
+  password: newPassword,
+  verifyPassword: newVerifyPassword,
+  date: newDate,
+  email: newEmail,
+  gender: newGender,
+  weight: newWeight,
+  difficulty: newDifficulty,
+  exerciseType: newExerciseType,
+  muscleGroup: newMuscleGroup,
+  height: newHeight,
+  goal: newGoal,
+}
+await updateDoc(userDoc,newFields)
+ navigate('/')
 
-    navigate("/LoginPage");
-  }
-  };
-  
+}
+}
+const [confirm,setConfirm]=useState(false);
+const [deleteclick,setDeleteClick]=useState(false);
+
+
+const deleteUser=async()=>{
+    setDeleteClick(true)
+    if(confirm){
+    const userDoc=doc(db,"User",userValues[conectedUser]?.id)
+    await deleteDoc(userDoc)
+    navigate("/")
+    }
+}
 
   return (
     <div className="form-wrapper">
       <div className="signUp-form">
+
         <div>
+
           <div className="column">
-            <h1 className="title">Sign-Up</h1>
+            <h1 className="title">Edit detailes</h1>
 
             <input
               placeholder="User name"
@@ -314,8 +320,8 @@ function FirstSignIn() {
                 setNewGoal(event.target.value);
               }}
             />
-            <button onClick={createUser} className="button-sign">
-              Sign Up
+            <button onClick={()=>updateUser()} className="button-sign">
+              Approve
             </button>
 
             {userValues?.map((user, index) => {
@@ -333,81 +339,15 @@ function FirstSignIn() {
                 </div>
               );
             })}
+        <button className="left button-delete" onClick={()=>deleteUser()}>Delelte user</button>
+        {deleteclick&&<p >Are you sure you want to delete your user?</p>}
+        {deleteclick&&<button onClick={()=>setConfirm(true)}>Yes</button>}
+        {deleteclick&&<button onClick={()=>setConfirm(false)}>No</button>}
           </div>
         </div>
       </div>
     </div>
   );
 }
-export default FirstSignIn;
+export default EditPage;
 
-//
-// function IfExist(user){
-// for(let i=0;i<userValues?.length-1;i++){
-//     if(userValues[i]?.userName===user?.value){
-//         console.log(userValues[i]?.userName);
-//         console.log(user?.value);
-//         return false;
-//     }
-// }
-// return true;
-// }
-// return (
-//     <form className=" form-wrapper" onSubmit={handleSubmit(onSubmit)}>
-//       <div className="signUp-form">
-//         <div>
-//           <div className="column">
-//             <h1 className="title">Sign-Up</h1>
-//             <input id="user"
-//               placeholder="User name"
-//               {...register("userName", { required: true})}
-//                 />
-//             {errors.userName && <span>User name is required</span>}
-//             {(!IfExist(document.getElementById("user")))&&<span>User name is not aveliable</span>}
-//             <input
-//               placeholder="First name"
-//               type="text"
-//               {...register("firstName", { required: true })}
-//             />
-//             {errors.firstName && <span>First name is required</span>}
-
-//             <input
-//               placeholder="Last name"
-//               type="text"
-//               {...register("lastName", { required: true })}
-//             />
-//             {errors.lastName && <span>Last name is required</span>}
-//             <input
-//               placeholder="Password"
-//               type="password"
-//               {...register("password", { required: true,minLength:4 })}
-//             />
-//             {errors.password && <span>Password must be at least 4 chars</span>}
-
-//             <input
-//               placeholder="Verify password"
-//               type="password"
-//               {...register("verifyPassword", { required: true,minLength:4 })}
-//             />
-//             {errors.verifyPassword && <span>Password does not match</span>}
-//             <input
-//               type="date"
-//               {...register("date", { required: true })}
-//             />
-//             {errors.date && <span>Date of birth is required</span>}
-
-//             <input
-//               placeholder="E-mail"
-//               type="text"
-//               {...register("E_Mail", { required: true })}
-//             />
-//             {errors.E_Mail && <span>E-mail is required</span>}
-//
-
-//          <input type="submit" className="button-sign" value="SignUp" ></input>
-//           </div>
-//         </div>
-//       </div>
-//     </form>
-//   );
-// }
