@@ -8,8 +8,8 @@ import { collection, getDocs, doc, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
 export default function ContextData() {
 
-    const navigate=useNavigate()
-    const [takeParams,setTakeParms]=useState()
+    const navigate = useNavigate()
+    const [takeParams, setTakeParms] = useState()
     //NameOfUsersArray:
     const userCollectionRef = collection(db, "User");
     //NameOfProgressArray:
@@ -24,11 +24,14 @@ export default function ContextData() {
     const [userValues, setUserValues] = useState([]);
     const [userProgress, setUserProgress] = useState([]);
 
+
     useEffect(() => {
         //Setting FireBase  data User
         const getUsers = async () => {
             const data = await getDocs(userCollectionRef);
             setUserValues(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+
         };
         getUsers();
 
@@ -39,43 +42,44 @@ export default function ContextData() {
         };
         getUsersProgress();
 
-    }, );
+    }, []);
+
 
 
 
     //Api Workouts
-    const [ApiWorkouts, setApiWorkouts] = useState([]);
-    const muscleForApi = userValues[conectedUser]?.muscleGroup.trim()
-    const difficultyForApi = userValues[conectedUser]?.difficulty.trim()
+    // const [ApiWorkouts, setApiWorkouts] = useState([]);
+    // const muscleForApi = userValues[conectedUser]?.muscleGroup.trim()
+    // const difficultyForApi = userValues[conectedUser]?.difficulty.trim()
 
-    const UserWorkouts = async () => {
-        const options = {
-            method: 'GET',
-            url: `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises`,
-            params: { muscle: muscleForApi, difficulty: difficultyForApi },
-            headers: {
-                'X-RapidAPI-Key': '2e85761d3emsh297c57225455631p16cedcjsnf9b8f634604f',
-                'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
-            }
-        };
+    // const UserWorkouts = async () => {
+    //     const options = {
+    //         method: 'GET',
+    //         url: `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises`,
+    //         params: { muscle: muscleForApi, difficulty: difficultyForApi },
+    //         headers: {
+    //             'X-RapidAPI-Key': '2e85761d3emsh297c57225455631p16cedcjsnf9b8f634604f',
+    //             'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+    //         }
+    //     };
 
-        axios.request(options).then(function (response) {
-            console.log(response.data);
-            setApiWorkouts(response.data)
-        }).catch(function (error) {
-            console.error(error);
-        });
-        if(takeParams!==userValues[conectedUser]?.userName){
-          navigate("*")
-      }
-      console.log(takeParams);
+    //     axios.request(options).then(function (response) {
+    //         console.log(response.data);
+    //         setApiWorkouts(response.data)
+    //     }).catch(function (error) {
+    //         console.error(error);
+    //     });
+    //     if (takeParams !== userValues[conectedUser]?.userName) {
+    //         navigate("*")
+    //     }
+    //     console.log(takeParams);
+    // }
+
+
+
+    function offline() {
+
     }
-
- 
-
-function offline(){
- 
-}
     let ImagesForApi = [
         {
             name: "abdominals",
@@ -154,8 +158,6 @@ function offline(){
         userCollectionRef,
         progressCollectionRef,
         isOnline, setIsOnline,
-        ApiWorkouts,
-        UserWorkouts,
         userProgress,
         setUserProgress,
         offline,

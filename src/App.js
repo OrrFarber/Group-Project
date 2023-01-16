@@ -9,15 +9,18 @@ import LoginPage from "./pages/LoginPage";
 import WorkoutExercises from "./pages/WorkoutExercises";
 import WorkoutDetails from "./pages/WorkoutDetails";
 import Nowhere from "./pages/404";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { createContext } from "react";
 import { Toolbar, Button, Box } from "@mui/material";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import axios from "axios";
+import { useNavigate, } from "react-router-dom";
 
 export const UserContext = createContext();
 
 function App() {
+  const navigate = useNavigate()
   const {
     userValues,
     setUserValues,
@@ -33,7 +36,7 @@ function App() {
     userProgress,
     setUserProgress,
     offline,
-    setTakeParms,
+    setTakeParms, muscleForApi
   } = ContextData();
   const contextValue = {
     userValues,
@@ -50,8 +53,54 @@ function App() {
     userProgress,
     setUserProgress,
     offline,
-    setTakeParms,
+    setTakeParms, muscleForApi
   };
+  const [apiWork, setApiWork] = useState([])
+  const [mus, setMus] = useState(muscleForApi)
+  const [dif, setDif] = useState(userValues[conectedUser]?.difficulty.trim())
+
+
+
+  useEffect(() => {
+    PPP()
+  }, [userValues])
+
+  function PPP() {
+    setMus(userValues[conectedUser]?.muscleGroup.trim())
+    setDif(userValues[conectedUser]?.difficulty.trim())
+  }
+
+  const UserWorkoutss = async () => {
+    console.log(mus, "this is mus");
+    if (mus || dif) {
+
+      const options = {
+        method: 'GET',
+        url: `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises`,
+        params: { muscle: mus, difficulty: dif },
+        headers: {
+          'X-RapidAPI-Key': '2e85761d3emsh297c57225455631p16cedcjsnf9b8f634604f',
+          'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+        }
+      };
+
+      axios.request(options).then(function (response) {
+        console.log(response.data, "THI9SS");
+        setApiWork(response.data)
+      }).catch(function (error) {
+        console.error(error);
+      });
+      // if (takeParams !== userValues[conectedUser]?.userName) {
+      //   navigate("*")
+      // }
+      // console.log(takeParams);
+    }
+  }
+  const [bb, setbb] = useState(false)
+  useEffect(() => {
+    UserWorkoutss()
+    navigate(`/WorkoutExercises/adiva`)
+  }, [bb])
 
   console.log(userValues[conectedUser]?.isOnline);
   return (
@@ -169,11 +218,11 @@ function App() {
 
           <div>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage UserWorkoutss={UserWorkoutss} setDif={setDif} setMus={setMus} bb={bb} setbb={setbb} />} />
               <Route path="/LoginPage" element={<LoginPage />} />
               <Route
                 path="/WorkoutExercises/:userName"
-                element={<WorkoutExercises />}
+                element={<WorkoutExercises UserWorkoutss={UserWorkoutss} setDif={setDif} setMus={setMus} apiWork={apiWork} />}
               />
               <Route
                 path="/WorkoutDetails/:WorkoutName"
@@ -186,7 +235,7 @@ function App() {
             </Routes>
           </div>
 
-          <Footer className="footer" />
+          {/* <Footer className="footer" /> */}
         </Box>
       </div>
     </UserContext.Provider>
