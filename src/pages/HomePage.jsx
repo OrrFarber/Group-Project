@@ -1,39 +1,45 @@
-import "./Home.css";
+// import "./Home.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router";
-import { updateDoc,doc } from "@firebase/firestore";
+import { updateDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import BodyParts from "./BodyParts";
+import { Typography, Button, Box } from "@mui/material";
+
 export default function HomePage() {
-  const { userValues, userIndex,conectedUser,isOnline,setIsOnline } =useContext(UserContext);
+  const { userValues, userIndex, conectedUser, isOnline, setIsOnline } =
+    useContext(UserContext);
   const navigate = useNavigate();
-  
+
   const params = useParams();
-  const LogOut =()=>{
-      navigate("/LoginPage");
-      setIsOnline(false)
+  const LogOut = () => {
+    navigate("/LoginPage");
+    setIsOnline(false);
   };
-  console.log(isOnline)
+  console.log(isOnline);
   console.log(conectedUser);
   return (
-    <div className="HomePage">
-      <div className="top">
+    <div>
+      <Box>
         {isOnline && (
-          <button onClick={() => LogOut()}>Log out</button>
+          <Button
+            sx={{ m: 8 }}
+            color="primary"
+            size="large"
+            variant="contained"
+            onClick={() => LogOut()}
+          >
+            Log out
+          </Button>
         )}
         {isOnline && (
-          <h1>Hello {userValues[conectedUser]?.firstName}</h1>
+          <Typography color="primary" variant="h4">
+            Hello {userValues[conectedUser]?.firstName}
+          </Typography>
         )}
-            {isOnline&&<BodyParts></BodyParts>}
-      </div>
-       
-      <div className="bottom">
-        <h4>Get help</h4>
-        <h4>About</h4>
-        <h4>Contact</h4>
-        <h4>Join us</h4>
-      </div>
+        {isOnline && <BodyParts></BodyParts>}
+      </Box>
     </div>
   );
 }
