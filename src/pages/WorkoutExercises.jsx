@@ -6,15 +6,13 @@ import "./workoutExercises.css";
 import { UserContext } from "../App";
 import { useContext } from "react";
 import { set } from "react-hook-form";
-import BodyParts from './BodyParts'
-
-import { useNavigate } from "react-router-dom";
 import BodyParts from "./BodyParts";
-import { Button, Typography } from "@mui/material";
+
+import { Button, Typography, Box, Paper } from "@mui/material";
 
 function WorkoutExercises() {
-    const { userValues, conectedUser, ApiWorkouts,
-      UserWorkouts,setTakeParms, } = useContext(UserContext);
+  const { userValues, conectedUser, ApiWorkouts, UserWorkouts, setTakeParms } =
+    useContext(UserContext);
 
   const [difficulty, setDifficulty] = useState("");
   const [exerciseType, setExerciseType] = useState("");
@@ -22,57 +20,95 @@ function WorkoutExercises() {
 
   console.log(ApiWorkouts);
 
-  const params=useParams()
-    useEffect(()=>{
-    setTakeParms(params.userName)   
-},[])
+  const params = useParams();
+  useEffect(() => {
+    setTakeParms(params.userName);
+  }, []);
   return (
     <div className="all-workouts">
-      <Typography variant="h3" color="primary" display="block">
-        All workouts
-      </Typography>
-      <br />
-      <Button
-        color="primary"
-        size="large"
-        variant="contained"
-        onClick={() => UserWorkouts()}
-      >
-        show excrercise
-      </Button>
-      <br />
-      <Typography varient="overline" color="primary">
-        {" "}
-        {userValues[conectedUser]?.muscleGroup}{" "}
-      </Typography>
+      <Box sx={{ minHeight: "98vh" }}>
+        <Typography variant="h3" color="primary.dark" display="block">
+          All workouts
+        </Typography>
+        <br />
+        <Button
+          color="primary"
+          size="large"
+          variant="contained"
+          sx={{m:2}}
+          onClick={() => UserWorkouts()}
+        >
+          show excrercise
+        </Button>
+        <br />
+        <Typography varient="overline" color="primary">
+          {userValues[conectedUser]?.muscleGroup}
+        </Typography>
 
-      {ApiWorkouts?.map((workout) => (
-        <div className="single-workout">
-          <div className="workout-params">
-            <Typography varient="h3">{workout.name}</Typography>
-            <p>{workout.difficulty}</p>
-            <p>{workout.equipment}</p>
-            <p>{workout.muscle}</p>
-            <p>{workout.type}</p>
+        {ApiWorkouts?.map((workout) => (
+          <div className="single-workout">
+            <Paper sx={{ p: 3, m: 4, borderRadius: 10 }} elevation={24}>
+              <div className="workout-params">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ borderRadius: 5 }}
+                >
+                  {workout.name}
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ borderRadius: 5 }}
+                >
+                  {" "}
+                  {workout.difficulty}
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ borderRadius: 5 }}
+                >
+                  {" "}
+                  {workout.equipment}
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ borderRadius: 5 }}
+                >
+                  {" "}
+                  {workout.muscle}
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ borderRadius: 5 }}
+                >
+                  {" "}
+                  {workout.type}
+                </Button>
+              </div>
+              <div className="workout-instructions">
+                <Typography sx={{ m: 3 }} variant="body2"> {workout.instructions}</Typography>
+              </div>
+              <div className="workout-nav-link">
+                <Button
+                  LinkComponent={NavLink}
+                  sx={{ m: 2, width:"12vw"}}
+                  size="large"
+                 variant="contained"
+                  color="error"
+                  to={`/WorkoutDetails/${workout.name}`}
+                  state={{ singleWorkout: workout }}
+                >
+                  Start Workout
+                </Button>
+              </div>
+            </Paper>
           </div>
-          <div className="workout-instructions">
-            <p>{workout.instructions}</p>
-          </div>
-          <div className="workout-nav-link">
-            <Button
-              LinkComponent={NavLink}
-              sx={{ m: 2 }}
-              size="small"
-              fullWidth="true"
-              color="error"
-              to={`/WorkoutDetails/${workout.name}`}
-              state={{ singleWorkout: workout }}
-            >
-              <button color="error">Start Workout</button>
-            </Button>
-          </div>
-        </div>
-      ))}
+        ))}
+      </Box>
     </div>
   );
 }

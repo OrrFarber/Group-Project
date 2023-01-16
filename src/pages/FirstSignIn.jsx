@@ -1,6 +1,5 @@
 import { React, useContext, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-// import "./SignUp.css";
 import { UserContext } from "../App";
 import { redirect, useNavigate } from "react-router";
 import { db } from "../firebase/config";
@@ -21,6 +20,8 @@ import {
   Typography,
   Select,
   MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -124,14 +125,14 @@ function FirstSignIn() {
       checkDiffuculty()
     );
   };
-  
+
   const createUser = async () => {
     setClick(true);
     setNewIsOnline(false);
-   
-    setNewUserIndex(userValues.length)
-    if(checkAll()){
-      (await addDoc(userCollectionRef, {
+
+    setNewUserIndex(userValues.length);
+    if (checkAll()) {
+      await addDoc(userCollectionRef, {
         userName: newUserName,
         firstName: newFirstName,
         lastName: newLastName,
@@ -147,15 +148,15 @@ function FirstSignIn() {
         height: newHeight,
         goal: newGoal,
         isOnline: false,
-        userIndex:newUserIndex,
-      }));
-    await addDoc(progressCollectionRef, {
-      userName: newUserName,
-      progress: [],
-    });
+        userIndex: newUserIndex,
+      });
+      await addDoc(progressCollectionRef, {
+        userName: newUserName,
+        progress: [],
+      });
 
-    navigate("/LoginPage");
-  }
+      navigate("/LoginPage");
+    }
   };
 
   const ErrorTypography = styled(Typography)({
@@ -163,19 +164,19 @@ function FirstSignIn() {
   });
 
   return (
-    <Paper outlined="12" sx={{ m: 10, mt:1 , }}>
+    <Paper elevation={8} sx={{ m: 10, mt: 1 }}>
       <Box
         sx={{
           display: "inline-flex",
           flexDirection: "column",
           justifyItems: "center",
           m: 2,
-          mb: 8 
+          mt: 4,
         }}
       >
         <Typography
           variant="h3"
-          color="primary"
+          color="primary.dark"
           sx={{ alignItems: "center", flexDirection: "column" }}
           className="title"
         >
@@ -286,7 +287,9 @@ function FirstSignIn() {
               setNewGender(event.target.value);
             }}
           />
-          <label htmlFor="Male">Male</label>
+          <Typography variant="p" color="primary" sx={{ p: 2 }} htmlFor="Male">
+            Male
+          </Typography>
 
           <input
             type="radio"
@@ -297,7 +300,14 @@ function FirstSignIn() {
               setNewGender(event.target.value);
             }}
           />
-          <label htmlFor="Female">Female</label>
+          <Typography
+            variant="p"
+            color="primary"
+            sx={{ p: 2 }}
+            htmlFor="Female"
+          >
+            Female
+          </Typography>
         </Box>
 
         <TextField
@@ -324,27 +334,30 @@ function FirstSignIn() {
         <Typography variant="h6" color="primary">
           Chose the difficulty level of the exercise:{" "}
         </Typography>
-        <Select
-          sx={{ m: 1 }}
-          placeholder="Difficulty"
-          onChange={(event) => {
-            setNewDifficulty(event.target.value);
-          }}
-        >
-          <em>Difficulty</em>
-          <MenuItem color="primary" value="none">
-            None
-          </MenuItem>
-          <MenuItem color="primary" value="beginner">
-            beginner
-          </MenuItem>
-          <MenuItem color="primary" value="intermediate">
-            intermediate
-          </MenuItem>
-          <MenuItem color="primary" value="expert">
-            expert
-          </MenuItem>
-        </Select>
+
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel>Difficulty</InputLabel>
+          <Select
+            sx={{ m: 1 }}
+            placeholder="Difficulty"
+            onChange={(event) => {
+              setNewDifficulty(event.target.value);
+            }}
+          >
+            <MenuItem color="primary" value="none">
+              None
+            </MenuItem>
+            <MenuItem color="primary" value="beginner">
+              beginner
+            </MenuItem>
+            <MenuItem color="primary" value="intermediate">
+              intermediate
+            </MenuItem>
+            <MenuItem color="primary" value="expert">
+              expert
+            </MenuItem>
+          </Select>
+        </FormControl>
         {click && !checkDiffuculty() && (
           <ErrorTypography>Difficulty is required</ErrorTypography>
         )}
@@ -357,23 +370,25 @@ function FirstSignIn() {
         >
           Chose the exercise type:
         </Typography>
-        <Select
-          name="exercise-type"
-          onChange={(event) => {
-            setNewExerciseType(event.target.value);
-          }}
-        >
-          <em>Exercise Type</em>
-          <MenuItem value="cardio">cardio</MenuItem>
-          <MenuItem value="olympic_weightlifting">
-            olympic_weightlifting
-          </MenuItem>
-          <MenuItem value="plyometrics">plyometrics</MenuItem>
-          <MenuItem value="powerlifting">powerlifting</MenuItem>
-          <MenuItem value="strength">strength</MenuItem>
-          <MenuItem value="stretching">stretching</MenuItem>
-          <MenuItem value="strongman">strongman</MenuItem>
-        </Select>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel>Exercise type</InputLabel>
+          <Select
+            name="exercise-type"
+            onChange={(event) => {
+              setNewExerciseType(event.target.value);
+            }}
+          >
+            <MenuItem value="cardio">cardio</MenuItem>
+            <MenuItem value="olympic_weightlifting">
+              olympic_weightlifting
+            </MenuItem>
+            <MenuItem value="plyometrics">plyometrics</MenuItem>
+            <MenuItem value="powerlifting">powerlifting</MenuItem>
+            <MenuItem value="strength">strength</MenuItem>
+            <MenuItem value="stretching">stretching</MenuItem>
+            <MenuItem value="strongman">strongman</MenuItem>
+          </Select>
+        </FormControl>
 
         <Typography
           variant="h6"
@@ -383,30 +398,33 @@ function FirstSignIn() {
         >
           Chose muscle group targeted by the exercise:
         </Typography>
-        <Select
-          name="muscle-group"
-          onChange={(event) => {
-            setNewMuscleGroup(event.target.value);
-          }}
-        >
-          <em>Muscle Type</em>
-          <MenuItem value="abdominals">abdominals</MenuItem>
-          <MenuItem value="abductors">abductors</MenuItem>
-          <MenuItem value="adductors">adductors</MenuItem>
-          <MenuItem value="biceps">biceps</MenuItem>
-          <MenuItem value="calves">calves</MenuItem>
-          <MenuItem value="chest">chest</MenuItem>
-          <MenuItem value="forearms">forearms</MenuItem>
-          <MenuItem value="glutes">glutes</MenuItem>
-          <MenuItem value="hamstrings">hamstrings</MenuItem>
-          <MenuItem value="lats">lats</MenuItem>
-          <MenuItem value="lowerback ">lowerback </MenuItem>
-          <MenuItem value="middleback ">middleback </MenuItem>
-          <MenuItem value="neck ">neck </MenuItem>
-          <MenuItem value="quadriceps ">quadriceps </MenuItem>
-          <MenuItem value="traps ">traps </MenuItem>
-          <MenuItem value="triceps ">triceps </MenuItem>
-        </Select>
+        <FormControl sx={{ m: 2, minWidth: 120 }}>
+          <InputLabel>Muscle type</InputLabel>
+          <Select
+            name="muscle-group"
+            label="choose a muscle"
+            onChange={(event) => {
+              setNewMuscleGroup(event.target.value);
+            }}
+          >
+            <MenuItem value="abdominals">abdominals</MenuItem>
+            <MenuItem value="abductors">abductors</MenuItem>
+            <MenuItem value="adductors">adductors</MenuItem>
+            <MenuItem value="biceps">biceps</MenuItem>
+            <MenuItem value="calves">calves</MenuItem>
+            <MenuItem value="chest">chest</MenuItem>
+            <MenuItem value="forearms">forearms</MenuItem>
+            <MenuItem value="glutes">glutes</MenuItem>
+            <MenuItem value="hamstrings">hamstrings</MenuItem>
+            <MenuItem value="lats">lats</MenuItem>
+            <MenuItem value="lowerback ">lowerback </MenuItem>
+            <MenuItem value="middleback ">middleback </MenuItem>
+            <MenuItem value="neck ">neck </MenuItem>
+            <MenuItem value="quadriceps ">quadriceps </MenuItem>
+            <MenuItem value="traps ">traps </MenuItem>
+            <MenuItem value="triceps ">triceps </MenuItem>
+          </Select>
+        </FormControl>
         <br />
         <TextField
           placeholder="Goal"

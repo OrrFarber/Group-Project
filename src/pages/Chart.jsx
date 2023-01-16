@@ -1,73 +1,62 @@
 import { ResponsiveBar } from "@nivo/bar";
 import { useState } from "react";
 import { data } from "./ChartData";
-import { UserContext } from '../App'
-import React, { useContext } from 'react'
-import { useEffect } from 'react'
+import { UserContext } from "../App";
+import React, { useContext } from "react";
+import { useEffect } from "react";
 import ContextData from "../components/ContextData";
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Box from '@mui/material/Box';
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
 export default function Chart() {
-  const { userProgress, userValues, conectedUser, ApiWorkouts } = useContext(UserContext)
-  const [dataUser, setDataUser] = useState([])
-  const [DataProgressUser, setDataProgressUser] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [stepBar, setStepBar] = useState(true)
-  const date = new Date()
-  const fullDate = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()}`
+  const { userProgress, userValues, conectedUser, ApiWorkouts } =
+    useContext(UserContext);
+  const [dataUser, setDataUser] = useState([]);
+  const [DataProgressUser, setDataProgressUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [stepBar, setStepBar] = useState(true);
+  const date = new Date();
+  const fullDate = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
   let dt;
 
   useEffect(() => {
-    setIsLoading(true)
-    if (!userProgress.length || !userValues.length || !conectedUser) return setIsLoading(true)
+    setIsLoading(true);
+    if (!userProgress.length || !userValues.length || !conectedUser)
+      return setIsLoading(true);
     console.log(userProgress, userValues, conectedUser);
-    const tempUser = userProgress.find(item => userValues[conectedUser].userName == item.userName);
+    const tempUser = userProgress.find(
+      (item) => userValues[conectedUser].userName == item.userName
+    );
     setDataProgressUser(tempUser?.progress);
-    dt = tempUser?.progress
+    dt = tempUser?.progress;
     console.log("this is", dt);
-    StepBar(dt)
-    GetMuch(dt, "2023")
-    setIsLoading(false)
+    StepBar(dt);
+    GetMuch(dt, "2023");
+    setIsLoading(false);
 
-
-
-
-    // asd 
-  }, [conectedUser, userProgress, userValues])
+    // asd
+  }, [conectedUser, userProgress, userValues]);
   console.log(DataProgressUser);
-  // dsf 
+  // dsf
   function StepBar(dt) {
-    const tempArr = dt.find(item => item.date = fullDate)
+    const tempArr = dt.find((item) => (item.date = fullDate));
     if (!tempArr.workouts.length) {
-      setStepBar(0)
+      setStepBar(0);
     } else {
-      console.log(tempArr, "this")
-      setStepBar(tempArr.workouts.length)
+      console.log(tempArr, "this");
+      setStepBar(tempArr.workouts.length);
     }
     if (tempArr.workouts.length > 7) {
-      setStepBar(7)
+      setStepBar(7);
     }
-
   }
 
-
-  let months = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-  ];
+  let months = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   let muscles = [
     "abdominals",
     "abductors",
@@ -89,11 +78,11 @@ export default function Chart() {
   const [monthGraph, setMonthGraph] = useState([]);
   //   const [ter,setTer]=useState()
   function GetMuch(arr, year) {
-    const MMM = dataUser
+    const MMM = dataUser;
     months.forEach((month) => {
       let graph = {};
       muscles.forEach((muc) => {
-        console.log(arr)
+        console.log(arr);
         const filteredByDate = filterByDate(arr, year, month);
         const numOfTimes = filterByType(filteredByDate, muc);
         graph.date = `${year}-${month}`;
@@ -101,8 +90,8 @@ export default function Chart() {
         console.log(list);
       });
       list.push(graph);
-      MMM.push(graph)
-      setDataUser(MMM)
+      MMM.push(graph);
+      setDataUser(MMM);
     });
   }
   // console.log(dataUser);
@@ -138,25 +127,31 @@ export default function Chart() {
   //     }
   // }
   const steps = [
-    'greate start',
-    '5 more ',
-    'you got it',
-    '3 left',
-    'almost 1',
-    'the last one',
-    'np pain no gain'
+    "grate start",
+    "5 more ",
+    "you got it",
+    "3 left",
+    "almost 1",
+    "the last one",
+    "no pain no gain",
   ];
   return (
-    <div style={{ height: `${height}vwד`, width: "100vw" }}>
+    <div style={{ height: `${height}vw`, width: "100vw" }}>
       {/* <p>{getMonthToChart}</p> */}
-      {isLoading ? <p>Loading</p> :
+      {isLoading ? (
+        <Typography sm={{ p: 16 }}>Loading</Typography>
+      ) : (
         <>
-          <button onClick={() => GetMuch(DataProgressUser, "2023")}>clcickkck</button>
+          <button onClick={() => GetMuch(DataProgressUser, "2023")}>
+            clcickkck
+          </button>
 
           {/* {console.log(monthGraph)} */}
-          <h1>Monthly workouts by muscle:</h1>
+          <Typography variant="h3" color="primary.dark">
+            Monthly workouts by muscle:
+          </Typography>
           <ResponsiveBar
-            // asd 
+            // asd
             data={dataUser}
             keys={[
               "abdominals",
@@ -244,8 +239,8 @@ export default function Chart() {
             ]}
           />
         </>
-      }
-      <Box sx={{ width: '100%' }}>
+      )}
+      <Box sx={{ width: "100%" }}>
         <Stepper activeStep={stepBar} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>

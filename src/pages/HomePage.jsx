@@ -34,7 +34,11 @@ export default function HomePage() {
           </Button>
         )}
         {isOnline && (
-          <Typography color="primary" variant="h4">
+          <Typography
+            color="primary.dark"
+            variant="h4"
+            sx={{ textTransform: "capitalize" }}
+          >
             Hello {userValues[conectedUser]?.firstName}
           </Typography>
         )}

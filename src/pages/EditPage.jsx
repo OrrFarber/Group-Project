@@ -4,8 +4,29 @@ import "./SignUp.css";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router";
 import { db } from "../firebase/config";
-import { collection, getDocs, doc, addDoc,updateDoc, deleteDoc } from "firebase/firestore";
+import { styled } from "@mui/material/styles";
+
+import {
+  collection,
+  getDocs,
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+
 import { async } from "q";
+import {
+  Box,
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 
 function EditPage() {
   const navigate = useNavigate();
@@ -34,7 +55,7 @@ function EditPage() {
     workoutCollectionRef,
     progressCollectionRef,
     userIndex,
-    conectedUser
+    conectedUser,
   } = useContext(UserContext);
 
   const checkUserName = () => {
@@ -108,223 +129,322 @@ function EditPage() {
       checkDiffuculty()
     );
   };
-  const updateUser=async()=>{
+  const updateUser = async () => {
     console.log(userValues[conectedUser].id);
     setClick(true);
-if(checkAll()){
-const userDoc=doc(db,"User",userValues[conectedUser].id)
-const newFields={userName: newUserName,
-  firstName: newFirstName,
-  lastName: newLastName,
-  password: newPassword,
-  verifyPassword: newVerifyPassword,
-  date: newDate,
-  email: newEmail,
-  gender: newGender,
-  weight: newWeight,
-  difficulty: newDifficulty,
-  exerciseType: newExerciseType,
-  muscleGroup: newMuscleGroup,
-  height: newHeight,
-  goal: newGoal,
-}
-await updateDoc(userDoc,newFields)
- navigate('/')
-
-}
-}
-const [confirm,setConfirm]=useState(false);
-const [deleteclick,setDeleteClick]=useState(false);
-
-
-const deleteUser=async()=>{
-    setDeleteClick(true)
-    if(confirm){
-    const userDoc=doc(db,"User",userValues[conectedUser]?.id)
-    await deleteDoc(userDoc)
-    navigate("/")
+    if (checkAll()) {
+      const userDoc = doc(db, "User", userValues[conectedUser].id);
+      const newFields = {
+        userName: newUserName,
+        firstName: newFirstName,
+        lastName: newLastName,
+        password: newPassword,
+        verifyPassword: newVerifyPassword,
+        date: newDate,
+        email: newEmail,
+        gender: newGender,
+        weight: newWeight,
+        difficulty: newDifficulty,
+        exerciseType: newExerciseType,
+        muscleGroup: newMuscleGroup,
+        height: newHeight,
+        goal: newGoal,
+      };
+      await updateDoc(userDoc, newFields);
+      navigate("/");
     }
-}
+  };
+  const [confirm, setConfirm] = useState(false);
+  const [deleteclick, setDeleteClick] = useState(false);
+
+  const deleteUser = async () => {
+    setDeleteClick(true);
+    if (confirm) {
+      const userDoc = doc(db, "User", userValues[conectedUser]?.id);
+      await deleteDoc(userDoc);
+      navigate("/");
+    }
+  };
+
+  const ErrorTypography = styled(Typography)({
+    color: "red",
+  });
 
   return (
-    <div className="form-wrapper">
-      <div className="signUp-form">
+    <Paper elevation={8} sx={{ m: 4 }}>
+      <Box
+        sx={{
+          display: "inline-flex",
+          flexDirection: "column",
+          justifyItems: "center",
+          m: 2,
+          mt: 4,
+        }}
+      >
+        <Typography variant="h2" color="primary.dark" sm={{ p: 2 }}>
+          Edit detailes:
+        </Typography>
 
-        <div>
+        <TextField
+          sx={{ m: 1 }}
+          placeholder="User name"
+          color="primary"
+          align="center"
+          label="User Name"
+          onChange={(event) => {
+            setNewUserName(event.target.value);
+          }}
+        />
+        {click && !checkUserName() && (
+          <ErrorTypography>User name is required</ErrorTypography>
+        )}
 
-          <div className="column">
-            <h1 className="title">Edit detailes</h1>
+        <TextField
+          sx={{ m: 1 }}
+          placeholder="First name"
+          color="primary"
+          align="center"
+          label="First Name"
+          onChange={(event) => {
+            setNewFirstName(event.target.value);
+          }}
+        />
+        {click && !checkFirstName() && (
+          <ErrorTypography>First name is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="User name"
-              onChange={(event) => {
-                setNewUserName(event.target.value);
-              }}
-            />
-            {click && !checkUserName() && <span>User name is required</span>}
+        <TextField
+          sx={{ m: 1 }}
+          color="primary"
+          align="center"
+          label="Last name"
+          onChange={(event) => {
+            setNewLastName(event.target.value);
+          }}
+        />
+        {click && !checkLastName() && (
+          <ErrorTypography>Last name is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="First name"
-              onChange={(event) => {
-                setNewFirstName(event.target.value);
-              }}
-            />
-            {click && !checkFirstName() && <span>First name is required</span>}
+        <TextField
+          placeholder="Password"
+          sx={{ m: 1 }}
+          color="primary"
+          align="center"
+          label="Password"
+          onChange={(event) => {
+            setNewPassword(event.target.value);
+          }}
+        />
+        {click && !checkPassword() && (
+          <ErrorTypography>Password name is required</ErrorTypography>
+        )}
+        <TextField
+          placeholder="Verify password"
+          sx={{ m: 1 }}
+          color="primary"
+          align="center"
+          label="Verify password"
+          onChange={(event) => {
+            setNewVeifyPassword(event.target.value);
+          }}
+        />
+        {click && !checkVerifyPassword() && (
+          <ErrorTypography>Password does not match</ErrorTypography>
+        )}
 
-            <input
-              placeholder="Last name"
-              onChange={(event) => {
-                setNewLastName(event.target.value);
-              }}
-            />
-            {click && !checkLastName() && <span>Last name is required</span>}
+        <TextField
+          type="date"
+          sx={{ m: 1 }}
+          color="primary"
+          onChange={(event) => {
+            setNewDate(event.target.value);
+          }}
+        />
+        {click && !checkDate() && (
+          <ErrorTypography>Date is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="Password"
-              onChange={(event) => {
-                setNewPassword(event.target.value);
-              }}
-            />
-            {click && !checkPassword() && (
-              <span>Password name is required</span>
-            )}
-            <input
-              placeholder="Verify password"
-              onChange={(event) => {
-                setNewVeifyPassword(event.target.value);
-              }}
-            />
-            {click && !checkVerifyPassword() && (
-              <span>Password does not match</span>
-            )}
+        <TextField
+          sx={{ m: 1 }}
+          color="primary"
+          placeholder="E-mail"
+          label="E-mail"
+          onChange={(event) => {
+            setNewEmail(event.target.value);
+          }}
+        />
+        {click && !checkEmail() && (
+          <ErrorTypography>E-mail is required</ErrorTypography>
+        )}
+        <Box>
+          <input
+            type="radio"
+            id="Male"
+            name="gender"
+            value="Male"
+            onChange={(event) => {
+              setNewGender(event.target.value);
+            }}
+          />
+          <Typography variant="p" color="primary" sx={{ p: 2 }} htmlFor="Male">
+            Male
+          </Typography>
 
-            <input
-              type="date"
-              placeholder="Date"
-              onChange={(event) => {
-                setNewDate(event.target.value);
-              }}
-            />
-            {click && !checkDate() && <span>Date is required</span>}
+          <input
+            type="radio"
+            id="Female"
+            name="gender"
+            value="Female"
+            onChange={(event) => {
+              setNewGender(event.target.value);
+            }}
+          />
+          <Typography
+            variant="p"
+            color="primary"
+            sx={{ p: 2 }}
+            htmlFor="Female"
+          >
+            Female
+          </Typography>
+        </Box>
 
-            <input
-              placeholder="E-mail"
-              onChange={(event) => {
-                setNewEmail(event.target.value);
-              }}
-            />
-            {click && !checkEmail() && <span>E-mail is required</span>}
+        <TextField
+          placeholder="Height cm"
+          label="Height cm"
+          sx={{ m: 1 }}
+          color="primary"
+          onChange={(event) => {
+            setNewHeight(event.target.value);
+          }}
+        />
+        <TextField
+          placeholder="Weight KG"
+          label="Weight KG"
+          sx={{ m: 1 }}
+          color="primary"
+          onChange={(event) => {
+            setNewWeight(event.target.value);
+          }}
+        />
+        {click && !checkWeight() && (
+          <ErrorTypography>Weight is required</ErrorTypography>
+        )}
+        <Typography variant="h6" color="primary">
+          Chose the difficulty level of the exercise:{" "}
+        </Typography>
 
-            <div className="left">
-              <input
-                type="radio"
-                id="Male"
-                name="gender"
-                value="Male"
-                onChange={(event) => {
-                  setNewGender(event.target.value);
-                }}
-              />
-              <label htmlFor="Male">Male</label>
-            </div>
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Difficulty</InputLabel>
+          <Select
+            sx={{ m: 1 }}
+            placeholder="Difficulty"
+            onChange={(event) => {
+              setNewDifficulty(event.target.value);
+            }}
+          >
+            <MenuItem color="primary" value="none">
+              None
+            </MenuItem>
+            <MenuItem color="primary" value="beginner">
+              beginner
+            </MenuItem>
+            <MenuItem color="primary" value="intermediate">
+              intermediate
+            </MenuItem>
+            <MenuItem color="primary" value="expert">
+              expert
+            </MenuItem>
+          </Select>
+        </FormControl>
+        {click && !checkDiffuculty() && (
+          <ErrorTypography>Difficulty is required</ErrorTypography>
+        )}
 
-            <div className="left">
-              <input
-                type="radio"
-                id="Female"
-                name="gender"
-                value="Female"
-                onChange={(event) => {
-                  setNewGender(event.target.value);
-                }}
-              />
-              <label htmlFor="Female">Female</label>
-            </div>
+        <Typography
+          variant="h6"
+          color="primary"
+          name="exercise-type"
+          className="exercise type"
+        >
+          Chose the exercise type:
+        </Typography>
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Exercise type</InputLabel>
+          <Select
+            name="exercise-type"
+            onChange={(event) => {
+              setNewExerciseType(event.target.value);
+            }}
+          >
+            <MenuItem value="cardio">cardio</MenuItem>
+            <MenuItem value="olympic_weightlifting">
+              olympic_weightlifting
+            </MenuItem>
+            <MenuItem value="plyometrics">plyometrics</MenuItem>
+            <MenuItem value="powerlifting">powerlifting</MenuItem>
+            <MenuItem value="strength">strength</MenuItem>
+            <MenuItem value="stretching">stretching</MenuItem>
+            <MenuItem value="strongman">strongman</MenuItem>
+          </Select>
+        </FormControl>
 
-            <input
-              placeholder="Height cm"
-              onChange={(event) => {
-                setNewHeight(event.target.value);
-              }}
-            />
-            <input
-              placeholder="Weight KG"
-              onChange={(event) => {
-                setNewWeight(event.target.value);
-              }}
-            />
-            {click && !checkWeight() && <span>Weight is required</span>}
-            <label>Chose the difficulty level of the exercise: </label>
-            <select
-              placeholder="Difficulty"
-              onChange={(event) => {
-                setNewDifficulty(event.target.value);
-              }}
-            >
-              <option value="none">None</option>
-              <option value="beginner">beginner</option>
-              <option value="intermediate">intermediate</option>
-              <option value="expert">expert</option>
-            </select>
-            {click && !checkDiffuculty() && <span>Difficulty is required</span>}
+        <Typography
+          variant="h6"
+          color="primary"
+          name="muscle-group"
+          className="exercise type"
+        >
+          Chose muscle group targeted by the exercise:
+        </Typography>
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Muscle type</InputLabel>
+          <Select
+            name="muscle-group"
+            label="choose a muscle"
+            onChange={(event) => {
+              setNewMuscleGroup(event.target.value);
+            }}
+          >
+            <MenuItem value="abdominals">abdominals</MenuItem>
+            <MenuItem value="abductors">abductors</MenuItem>
+            <MenuItem value="adductors">adductors</MenuItem>
+            <MenuItem value="biceps">biceps</MenuItem>
+            <MenuItem value="calves">calves</MenuItem>
+            <MenuItem value="chest">chest</MenuItem>
+            <MenuItem value="forearms">forearms</MenuItem>
+            <MenuItem value="glutes">glutes</MenuItem>
+            <MenuItem value="hamstrings">hamstrings</MenuItem>
+            <MenuItem value="lats">lats</MenuItem>
+            <MenuItem value="lowerback ">lowerback </MenuItem>
+            <MenuItem value="middleback ">middleback </MenuItem>
+            <MenuItem value="neck ">neck </MenuItem>
+            <MenuItem value="quadriceps ">quadriceps </MenuItem>
+            <MenuItem value="traps ">traps </MenuItem>
+            <MenuItem value="triceps ">triceps </MenuItem>
+          </Select>
+        </FormControl>
+        <br />
+        <TextField
+          placeholder="Goal"
+          sx={{ m: 4 }}
+          onChange={(event) => {
+            setNewGoal(event.target.value);
+          }}
+        />
+        <br />
+        <Button
+          color="success"
+          variant="contained"
+          sx={{ m: 4 }}
+          onClick={() => updateUser()}
+          className="button-sign"
+        >
+          Approve
+        </Button>
 
-            <label name="exercise-type" className="exercise type">
-              Chose the exercise type:
-            </label>
-            <select
-              name="exercise-type"
-              onChange={(event) => {
-                setNewExerciseType(event.target.value);
-              }}
-            >
-              <option value="cardio">cardio</option>
-              <option value="olympic_weightlifting">
-                olympic_weightlifting
-              </option>
-              <option value="plyometrics">plyometrics</option>
-              <option value="powerlifting">powerlifting</option>
-              <option value="strength">strength</option>
-              <option value="stretching">stretching</option>
-              <option value="strongman">strongman</option>
-            </select>
-
-            <label name="muscle-group" className="exercise type">
-              Chose muscle group targeted by the exercise:
-            </label>
-            <select
-              name="muscle-group"
-              onChange={(event) => {
-                setNewMuscleGroup(event.target.value);
-              }}
-            >
-              <option value="abdominals">abdominals</option>
-              <option value="abductors">abductors</option>
-              <option value="adductors">adductors</option>
-              <option value="biceps">biceps</option>
-              <option value="calves">calves</option>
-              <option value="chest">chest</option>
-              <option value="forearms">forearms</option>
-              <option value="glutes">glutes</option>
-              <option value="hamstrings">hamstrings</option>
-              <option value="lats">lats</option>
-              <option value="lowerback ">lowerback </option>
-              <option value="middleback ">middleback </option>
-              <option value="neck ">neck </option>
-              <option value="quadriceps ">quadriceps </option>
-              <option value="traps ">traps </option>
-              <option value="triceps ">triceps </option>
-            </select>
-            <input
-              placeholder="Goal"
-              onChange={(event) => {
-                setNewGoal(event.target.value);
-              }}
-            />
-            <button onClick={()=>updateUser()} className="button-sign">
-              Approve
-            </button>
-
-            {userValues?.map((user, index) => {
+        {/* {userValues?.map((user, index) => {
               return (
                 <div key={index}>
                   <h1>{user.userName}</h1>
@@ -338,16 +458,41 @@ const deleteUser=async()=>{
                   <h1>{user.userIndex}</h1>
                 </div>
               );
-            })}
-        <button className="left button-delete" onClick={()=>deleteUser()}>Delelte user</button>
-        {deleteclick&&<p >Are you sure you want to delete your user?</p>}
-        {deleteclick&&<button onClick={()=>setConfirm(true)}>Yes</button>}
-        {deleteclick&&<button onClick={()=>setConfirm(false)}>No</button>}
-          </div>
-        </div>
-      </div>
-    </div>
+            })} */}
+
+        <Button
+          color="error"
+          variant="contained"
+          className="left button-delete"
+          onClick={() => deleteUser()}
+        >
+          Delelte user
+        </Button>
+        {deleteclick && <p>Are you sure you want to delete your user?</p>}
+        {deleteclick && (
+          <Button
+            color="primary"
+            variant="outlined"
+            size="small"
+            sx={{ m: 1 }}
+            onClick={() => setConfirm(true)}
+          >
+            Yes
+          </Button>
+        )}
+        {deleteclick && (
+          <Button
+            color="primary"
+            variant="outlined"
+            size="small"
+            sx={{ m: 1 }}
+            onClick={() => setConfirm(false)}
+          >
+            No
+          </Button>
+        )}
+      </Box>
+    </Paper>
   );
 }
 export default EditPage;
-
