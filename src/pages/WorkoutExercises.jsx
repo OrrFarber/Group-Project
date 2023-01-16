@@ -1,30 +1,27 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import "./workoutExercises.css";
 import { UserContext } from "../App";
 import { useContext } from "react";
 import { set } from "react-hook-form";
 import { useNavigate } from 'react-router-dom'
 import BodyParts from './BodyParts'
-
+import { useParams } from "react-router-dom";
 function WorkoutExercises() {
     const { userValues, conectedUser, ApiWorkouts,
-        UserWorkouts } = useContext(UserContext);
-    const [difficulty, setDifficulty] = useState("");
-    const [exerciseType, setExerciseType] = useState("");
-    const [muscleGroup, setMuscleGroup] = useState("");
-
-
-    console.log(ApiWorkouts);
-
+        UserWorkouts,setTakeParms, } = useContext(UserContext);
+   
+    const params=useParams()
+    useEffect(()=>{
+    setTakeParms(params.userName)
+    
+},[])
     return (
         <div className="all-workouts">
             <h1>All workouts</h1>
             <button onClick={() => UserWorkouts()}>show excrercise</button>
-            {userValues[conectedUser]?.muscleGroup}
-
             {ApiWorkouts?.map((workout) => (
                 <div className="single-workout">
                     <div className="workout-params">

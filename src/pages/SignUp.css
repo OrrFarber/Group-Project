@@ -41,7 +41,10 @@
     background-color: #4CAF50;
     color: white;
   }
-
+  .button-delete:hover {
+    background-color: red;
+    color: white;
+  }
   input{
     padding: 1rem;
     margin: 0.1rem;
@@ -59,4 +62,11 @@
   }
   .left{
     text-align: left;
+  }
+  .noWhere{
+  font-size: 50px;
+  font-stretch:ultra-condensed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: oblique;
+  color: royalblue;
   }

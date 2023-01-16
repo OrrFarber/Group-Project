@@ -5,9 +5,11 @@ import { useEffect } from "react";
 import axios from "axios";
 import { db } from "../firebase/config";
 import { collection, getDocs, doc, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router";
 export default function ContextData() {
 
-
+    const navigate=useNavigate()
+    const [takeParams,setTakeParms]=useState()
     //NameOfUsersArray:
     const userCollectionRef = collection(db, "User");
     //NameOfProgressArray:
@@ -61,15 +63,17 @@ export default function ContextData() {
         }).catch(function (error) {
             console.error(error);
         });
+        if(takeParams!==userValues[conectedUser]?.userName){
+          navigate("*")
+      }
+      console.log(takeParams);
     }
 
-    // console.log(muscleGroupp);
-    console.log(muscleForApi);
-    console.log(difficultyForApi);
-    // console.log(userProgress);
+ 
 
-
-
+function offline(){
+ 
+}
     let ImagesForApi = [
         {
             name: "abdominals",
@@ -151,8 +155,9 @@ export default function ContextData() {
         ApiWorkouts,
         UserWorkouts,
         userProgress,
-        setUserProgress
-
+        setUserProgress,
+        offline,
+        setTakeParms,
     };
 }
 
