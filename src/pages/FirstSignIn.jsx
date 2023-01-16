@@ -111,7 +111,7 @@ function FirstSignIn() {
   const createUser = async () => {
     setClick(true);
     setNewIsOnline(false);
-   
+   console.log(userValues.length);
     setNewUserIndex(userValues.length)
     if(checkAll()){
       (await addDoc(userCollectionRef, {

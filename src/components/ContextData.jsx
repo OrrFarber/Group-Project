@@ -40,7 +40,7 @@ export default function ContextData() {
     }, []);
 
 
-
+console.log(userValues[conectedUser]);
     //Api Workouts
     const [ApiWorkouts, setApiWorkouts] = useState([]);
     const muscleForApi = userValues[conectedUser]?.muscleGroup.trim()
