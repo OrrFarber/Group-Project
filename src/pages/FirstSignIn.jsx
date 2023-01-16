@@ -1,11 +1,28 @@
 import { React, useContext, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import "./SignUp.css";
+// import "./SignUp.css";
 import { UserContext } from "../App";
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { db } from "../firebase/config";
-import { collection, getDocs, doc, addDoc,updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
+
 import { async } from "q";
+import {
+  Box,
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 function FirstSignIn() {
   const navigate = useNavigate();
@@ -33,7 +50,7 @@ function FirstSignIn() {
     userCollectionRef,
     workoutCollectionRef,
     progressCollectionRef,
-    userIndex
+    userIndex,
   } = useContext(UserContext);
 
   const checkUserName = () => {
@@ -140,208 +157,298 @@ function FirstSignIn() {
     navigate("/LoginPage");
   }
   };
-  
+
+  const ErrorTypography = styled(Typography)({
+    color: "red",
+  });
 
   return (
-    <div className="form-wrapper">
-      <div className="signUp-form">
-        <div>
-          <div className="column">
-            <h1 className="title">Sign-Up</h1>
+    <Paper outlined="12" sx={{ m: 10, mt:1 , }}>
+      <Box
+        sx={{
+          display: "inline-flex",
+          flexDirection: "column",
+          justifyItems: "center",
+          m: 2,
+          mb: 8 
+        }}
+      >
+        <Typography
+          variant="h3"
+          color="primary"
+          sx={{ alignItems: "center", flexDirection: "column" }}
+          className="title"
+        >
+          Sign-Up
+        </Typography>
 
-            <input
-              placeholder="User name"
-              onChange={(event) => {
-                setNewUserName(event.target.value);
-              }}
-            />
-            {click && !checkUserName() && <span>User name is required</span>}
+        <TextField
+          sx={{ m: 1 }}
+          placeholder="User name"
+          color="primary"
+          align="center"
+          label="User Name"
+          onChange={(event) => {
+            setNewUserName(event.target.value);
+          }}
+        />
+        {click && !checkUserName() && (
+          <ErrorTypography>User name is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="First name"
-              onChange={(event) => {
-                setNewFirstName(event.target.value);
-              }}
-            />
-            {click && !checkFirstName() && <span>First name is required</span>}
+        <TextField
+          sx={{ m: 1 }}
+          placeholder="First name"
+          color="primary"
+          align="center"
+          id="firstname"
+          label="First Name"
+          onChange={(event) => {
+            setNewFirstName(event.target.value);
+          }}
+        />
+        {click && !checkFirstName() && (
+          <ErrorTypography>First name is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="Last name"
-              onChange={(event) => {
-                setNewLastName(event.target.value);
-              }}
-            />
-            {click && !checkLastName() && <span>Last name is required</span>}
+        <TextField
+          sx={{ m: 1 }}
+          color="primary"
+          align="center"
+          label="Last name"
+          onChange={(event) => {
+            setNewLastName(event.target.value);
+          }}
+        />
+        {click && !checkLastName() && (
+          <ErrorTypography color="error">Last name is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="Password"
-              onChange={(event) => {
-                setNewPassword(event.target.value);
-              }}
-            />
-            {click && !checkPassword() && (
-              <span>Password name is required</span>
-            )}
-            <input
-              placeholder="Verify password"
-              onChange={(event) => {
-                setNewVeifyPassword(event.target.value);
-              }}
-            />
-            {click && !checkVerifyPassword() && (
-              <span>Password does not match</span>
-            )}
+        <TextField
+          placeholder="Password"
+          sx={{ m: 1 }}
+          color="primary"
+          align="center"
+          label="Password"
+          onChange={(event) => {
+            setNewPassword(event.target.value);
+          }}
+        />
+        {click && !checkPassword() && (
+          <ErrorTypography>Password name is required</ErrorTypography>
+        )}
+        <TextField
+          placeholder="Verify password"
+          sx={{ m: 1 }}
+          color="primary"
+          align="center"
+          label="Verify password"
+          onChange={(event) => {
+            setNewVeifyPassword(event.target.value);
+          }}
+        />
+        {click && !checkVerifyPassword() && (
+          <ErrorTypography>Password does not match</ErrorTypography>
+        )}
 
-            <input
-              type="date"
-              placeholder="Date"
-              onChange={(event) => {
-                setNewDate(event.target.value);
-              }}
-            />
-            {click && !checkDate() && <span>Date is required</span>}
+        <TextField
+          type="date"
+          sx={{ m: 1 }}
+          color="primary"
+          onChange={(event) => {
+            setNewDate(event.target.value);
+          }}
+        />
+        {click && !checkDate() && (
+          <ErrorTypography>Date is required</ErrorTypography>
+        )}
 
-            <input
-              placeholder="E-mail"
-              onChange={(event) => {
-                setNewEmail(event.target.value);
-              }}
-            />
-            {click && !checkEmail() && <span>E-mail is required</span>}
+        <TextField
+          sx={{ m: 1 }}
+          color="primary"
+          placeholder="E-mail"
+          label="E-mail"
+          onChange={(event) => {
+            setNewEmail(event.target.value);
+          }}
+        />
+        {click && !checkEmail() && (
+          <ErrorTypography>E-mail is required</ErrorTypography>
+        )}
 
-            <div className="left">
-              <input
-                type="radio"
-                id="Male"
-                name="gender"
-                value="Male"
-                onChange={(event) => {
-                  setNewGender(event.target.value);
-                }}
-              />
-              <label htmlFor="Male">Male</label>
-            </div>
+        <Box>
+          <input
+            type="radio"
+            id="Male"
+            name="gender"
+            value="Male"
+            onChange={(event) => {
+              setNewGender(event.target.value);
+            }}
+          />
+          <label htmlFor="Male">Male</label>
 
-            <div className="left">
-              <input
-                type="radio"
-                id="Female"
-                name="gender"
-                value="Female"
-                onChange={(event) => {
-                  setNewGender(event.target.value);
-                }}
-              />
-              <label htmlFor="Female">Female</label>
-            </div>
+          <input
+            type="radio"
+            id="Female"
+            name="gender"
+            value="Female"
+            onChange={(event) => {
+              setNewGender(event.target.value);
+            }}
+          />
+          <label htmlFor="Female">Female</label>
+        </Box>
 
-            <input
-              placeholder="Height cm"
-              onChange={(event) => {
-                setNewHeight(event.target.value);
-              }}
-            />
-            <input
-              placeholder="Weight KG"
-              onChange={(event) => {
-                setNewWeight(event.target.value);
-              }}
-            />
-            {click && !checkWeight() && <span>Weight is required</span>}
-            <label>Chose the difficulty level of the exercise: </label>
-            <select
-              placeholder="Difficulty"
-              onChange={(event) => {
-                setNewDifficulty(event.target.value);
-              }}
-            >
-              <option value="none">None</option>
-              <option value="beginner">beginner</option>
-              <option value="intermediate">intermediate</option>
-              <option value="expert">expert</option>
-            </select>
-            {click && !checkDiffuculty() && <span>Difficulty is required</span>}
+        <TextField
+          placeholder="Height cm"
+          label="Height cm"
+          sx={{ m: 1 }}
+          color="primary"
+          onChange={(event) => {
+            setNewHeight(event.target.value);
+          }}
+        />
+        <TextField
+          placeholder="Weight KG"
+          label="Weight KG"
+          sx={{ m: 1 }}
+          color="primary"
+          onChange={(event) => {
+            setNewWeight(event.target.value);
+          }}
+        />
+        {click && !checkWeight() && (
+          <ErrorTypography>Weight is required</ErrorTypography>
+        )}
+        <Typography variant="h6" color="primary">
+          Chose the difficulty level of the exercise:{" "}
+        </Typography>
+        <Select
+          sx={{ m: 1 }}
+          placeholder="Difficulty"
+          onChange={(event) => {
+            setNewDifficulty(event.target.value);
+          }}
+        >
+          <em>Difficulty</em>
+          <MenuItem color="primary" value="none">
+            None
+          </MenuItem>
+          <MenuItem color="primary" value="beginner">
+            beginner
+          </MenuItem>
+          <MenuItem color="primary" value="intermediate">
+            intermediate
+          </MenuItem>
+          <MenuItem color="primary" value="expert">
+            expert
+          </MenuItem>
+        </Select>
+        {click && !checkDiffuculty() && (
+          <ErrorTypography>Difficulty is required</ErrorTypography>
+        )}
 
-            <label name="exercise-type" className="exercise type">
-              Chose the exercise type:
-            </label>
-            <select
-              name="exercise-type"
-              onChange={(event) => {
-                setNewExerciseType(event.target.value);
-              }}
-            >
-              <option value="cardio">cardio</option>
-              <option value="olympic_weightlifting">
-                olympic_weightlifting
-              </option>
-              <option value="plyometrics">plyometrics</option>
-              <option value="powerlifting">powerlifting</option>
-              <option value="strength">strength</option>
-              <option value="stretching">stretching</option>
-              <option value="strongman">strongman</option>
-            </select>
+        <Typography
+          variant="h6"
+          color="primary"
+          name="exercise-type"
+          className="exercise type"
+        >
+          Chose the exercise type:
+        </Typography>
+        <Select
+          name="exercise-type"
+          onChange={(event) => {
+            setNewExerciseType(event.target.value);
+          }}
+        >
+          <em>Exercise Type</em>
+          <MenuItem value="cardio">cardio</MenuItem>
+          <MenuItem value="olympic_weightlifting">
+            olympic_weightlifting
+          </MenuItem>
+          <MenuItem value="plyometrics">plyometrics</MenuItem>
+          <MenuItem value="powerlifting">powerlifting</MenuItem>
+          <MenuItem value="strength">strength</MenuItem>
+          <MenuItem value="stretching">stretching</MenuItem>
+          <MenuItem value="strongman">strongman</MenuItem>
+        </Select>
 
-            <label name="muscle-group" className="exercise type">
-              Chose muscle group targeted by the exercise:
-            </label>
-            <select
-              name="muscle-group"
-              onChange={(event) => {
-                setNewMuscleGroup(event.target.value);
-              }}
-            >
-              <option value="abdominals">abdominals</option>
-              <option value="abductors">abductors</option>
-              <option value="adductors">adductors</option>
-              <option value="biceps">biceps</option>
-              <option value="calves">calves</option>
-              <option value="chest">chest</option>
-              <option value="forearms">forearms</option>
-              <option value="glutes">glutes</option>
-              <option value="hamstrings">hamstrings</option>
-              <option value="lats">lats</option>
-              <option value="lowerback ">lowerback </option>
-              <option value="middleback ">middleback </option>
-              <option value="neck ">neck </option>
-              <option value="quadriceps ">quadriceps </option>
-              <option value="traps ">traps </option>
-              <option value="triceps ">triceps </option>
-            </select>
-            <input
-              placeholder="Goal"
-              onChange={(event) => {
-                setNewGoal(event.target.value);
-              }}
-            />
-            <button onClick={createUser} className="button-sign">
-              Sign Up
-            </button>
-
-            {userValues?.map((user, index) => {
-              return (
-                <div key={index}>
-                  <h1>{user.userName}</h1>
-                  <h1>{user.password}</h1>
-                </div>
-              );
-            })}
-            {userIndex?.map((user, index) => {
-              return (
-                <div key={index}>
-                  <h1>{user.userIndex}</h1>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
+        <Typography
+          variant="h6"
+          color="primary"
+          name="muscle-group"
+          className="exercise type"
+        >
+          Chose muscle group targeted by the exercise:
+        </Typography>
+        <Select
+          name="muscle-group"
+          onChange={(event) => {
+            setNewMuscleGroup(event.target.value);
+          }}
+        >
+          <em>Muscle Type</em>
+          <MenuItem value="abdominals">abdominals</MenuItem>
+          <MenuItem value="abductors">abductors</MenuItem>
+          <MenuItem value="adductors">adductors</MenuItem>
+          <MenuItem value="biceps">biceps</MenuItem>
+          <MenuItem value="calves">calves</MenuItem>
+          <MenuItem value="chest">chest</MenuItem>
+          <MenuItem value="forearms">forearms</MenuItem>
+          <MenuItem value="glutes">glutes</MenuItem>
+          <MenuItem value="hamstrings">hamstrings</MenuItem>
+          <MenuItem value="lats">lats</MenuItem>
+          <MenuItem value="lowerback ">lowerback </MenuItem>
+          <MenuItem value="middleback ">middleback </MenuItem>
+          <MenuItem value="neck ">neck </MenuItem>
+          <MenuItem value="quadriceps ">quadriceps </MenuItem>
+          <MenuItem value="traps ">traps </MenuItem>
+          <MenuItem value="triceps ">triceps </MenuItem>
+        </Select>
+        <br />
+        <TextField
+          placeholder="Goal"
+          onChange={(event) => {
+            setNewGoal(event.target.value);
+          }}
+        />
+        <Button
+          color="primary"
+          size="large"
+          variant="contained"
+          sx={{ m: 3, p: 1 }}
+          onClick={createUser}
+          className="button-sign"
+        >
+          Sign Up
+        </Button>
+      </Box>
+    </Paper>
   );
 }
 export default FirstSignIn;
 
 //
+
+// {userIndex?.map((user, index) => {
+//   return (
+//     <div key={index}>
+//       <h1>{user.userIndex}</h1>
+//     </div>
+//   );
+// })}
+
+// {userValues?.map((user, index) => {
+//   return (
+//     <div key={index}>
+//       <h1>{user.userName}</h1>
+//       <h1>{user.password}</h1>
+//     </div>
+//   );
+// })}
+
 // function IfExist(user){
 // for(let i=0;i<userValues?.length-1;i++){
 //     if(userValues[i]?.userName===user?.value){
