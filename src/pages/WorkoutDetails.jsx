@@ -6,15 +6,9 @@ import { UserContext } from "../App";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { set } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import {
-  collection,
-  getDocs,
-  doc,
-  addDoc,
-  updateDoc,
-} from "firebase/firestore";
 import { db } from "../firebase/config";
 import { Button, Typography, Box, Paper } from "@mui/material";
+import { collection, getDocs, doc, addDoc,updateDoc, deleteDoc } from "firebase/firestore";
 
 function WorkoutDetails() {
   const location = useLocation();

@@ -5,23 +5,28 @@ import { useNavigate, useParams } from "react-router";
 import { updateDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import BodyParts from "./BodyParts";
-import { Typography, Button, Box } from "@mui/material";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions,Box,Paper } from '@mui/material';
+
 
 export default function HomePage() {
   const { userValues, userIndex, conectedUser, isOnline, setIsOnline } =
     useContext(UserContext);
-  const navigate = useNavigate();
-
   const params = useParams();
   const LogOut = () => {
     navigate("/LoginPage");
     setIsOnline(false);
   };
-  console.log(isOnline);
-  console.log(conectedUser);
+  const navigate =useNavigate()
+  
+  
   return (
     <div>
-      <Box>
+      <Box >
         {isOnline && (
           <Button
             sx={{ m: 8 }}
@@ -42,8 +47,46 @@ export default function HomePage() {
             Hello {userValues[conectedUser]?.firstName}
           </Typography>
         )}
-        {isOnline && <BodyParts></BodyParts>}
+        
+        </Box>
+       
+       <Box sx={{display:'flex',justifyContent:'center',mt:3}}>
+       <Card sx={{ width: '80vw' }} >
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="300"
+          image="https://t4.ftcdn.net/jpg/03/17/72/47/240_F_317724775_qHtWjnT8YbRdFNIuq5PWsSYypRhOmalS.jpg"
+          alt="gym"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h4" component="div">
+          Feel Great.
+          Body and Mind.
+          </Typography>
+          <Typography color="primary" variant="h6" >
+          Choose from hundreds of workouts, healthy recipes, 
+       relaxing meditations, and expert articles, for a whole body and mind approach to feeling great.
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+      <Box sx={{ '& button': { m: 1 } }}>
+      <div>    
+       {!isOnline&& (<Button variant="contained" size="large" onClick={()=>navigate("/FirstSignIn")}>
+          Join now
+        </Button>)}
+      </div>
+    </Box>
+      </CardActions>
+    </Card>
+       </Box>
+        <Box>
+     
+    
+        {isOnline && <BodyParts></BodyParts>}  
       </Box>
+
     </div>
   );
 }
