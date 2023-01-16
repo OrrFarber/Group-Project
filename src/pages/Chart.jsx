@@ -24,8 +24,7 @@ export default function Chart() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!userProgress.length || !userValues.length || !conectedUser)
-      return setIsLoading(true);
+
     console.log(userProgress, userValues, conectedUser, "this");
     const tempUser = userProgress.find(
       (item) => userValues[conectedUser].userName == item.userName
@@ -36,6 +35,7 @@ export default function Chart() {
     StepBar(dt);
     GetMuch(dt, "2023");
     setIsLoading(false);
+    console.log(conectedUser, "1", userProgress, "2", userValues, "3")
 
     // asd
   }, [conectedUser, userProgress, userValues]);
@@ -113,8 +113,8 @@ export default function Chart() {
     console.log(sum);
     return sum;
   }
-  let height = dataUser.length * 5;
-  let symbolSize = dataUser.length * 6;
+  let height = dataUser.length * 5 / 2;
+  let symbolSize = 20;
   // console.log(data);
   // console.log(list);
   // console.log(dataUser + "asd")
@@ -134,7 +134,7 @@ export default function Chart() {
     "no pain no gain",
   ];
   return (
-    <div style={{ height: `${height}vw`, width: "100vw" }}>
+    <div style={{ height: `${height}vw`, width: "100vw", maxHeight: "90vh" }}>
       {/* <p>{getMonthToChart}</p> */}
       {isLoading ? (
         <Typography sm={{ p: 16 }}>Loading</Typography>
@@ -143,9 +143,20 @@ export default function Chart() {
           <button onClick={() => GetMuch(DataProgressUser, "2023")}>
             clcickkck
           </button>
-
+          <Box sx={{
+            width: "100%", display:
+              "flex", justifyContent: "center", padding: "5vw"
+          }}>
+            <Stepper activeStep={stepBar} alternativeLabel sx={{ width: "80%" }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel color="white">{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
           {/* {console.log(monthGraph)} */}
-          <Typography variant="h3" color="primary.dark">
+          <Typography variant="h3" color="primary.dark" marginBottom={"2vw"}>
             Monthly workouts by muscle:
           </Typography>
           <ResponsiveBar
@@ -216,6 +227,7 @@ export default function Chart() {
                 dataFrom: "keys",
                 anchor: "top",
                 direction: "row",
+                // wrap: "wrap",
                 justify: true,
                 translateX: -26,
                 translateY: -38,
@@ -236,18 +248,10 @@ export default function Chart() {
               },
             ]}
           />
-          </>
+        </>
       )}
-      
-      <Box sx={{ width: "100%" }}>
-        <Stepper activeStep={stepBar} alternativeLabel>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel color="white">{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Box>
+
+
     </div>
   );
 }

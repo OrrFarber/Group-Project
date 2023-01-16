@@ -347,3 +347,7 @@ body {
     display: none;
     /* font-size: 20rem; */
 }
+
+.css-kgnnj3-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+    color: green !important;
+}
