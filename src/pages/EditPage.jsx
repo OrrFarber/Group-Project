@@ -27,6 +27,7 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import { Progress } from "rsuite";
 
 function EditPage() {
   const navigate = useNavigate();
@@ -45,24 +46,23 @@ function EditPage() {
   const [newExerciseType, setNewExerciseType] = useState("");
   const [newMuscleGroup, setNewMuscleGroup] = useState("");
   const [newGoal, setNewGoal] = useState("");
-  const [newIsOnline, setNewIsOnline] = useState();
-  const [newUserIndex, setNewUserIndex] = useState();
+  
 
   const {
     userValues,
-    setUserValues,
-    userCollectionRef,
-    workoutCollectionRef,
-    progressCollectionRef,
     userIndex,
     conectedUser,
+    setIsOnline,
+    userProgress
   } = useContext(UserContext);
 
   const checkUserName = () => {
     for (let i = 0; i < userValues.length; i++) {
+        if(i!==conectedUser){
       if (userValues[i].userName === newUserName.trim()) {
         return false;
       }
+    }
     }
     if (newUserName.trim().length > 3) {
       return true;
@@ -132,41 +132,47 @@ function EditPage() {
   const updateUser = async () => {
     console.log(userValues[conectedUser].id);
     setClick(true);
-    if (checkAll()) {
-      const userDoc = doc(db, "User", userValues[conectedUser].id);
-      const newFields = {
-        userName: newUserName,
-        firstName: newFirstName,
-        lastName: newLastName,
-        password: newPassword,
-        verifyPassword: newVerifyPassword,
-        date: newDate,
-        email: newEmail,
-        gender: newGender,
-        weight: newWeight,
-        difficulty: newDifficulty,
-        exerciseType: newExerciseType,
-        muscleGroup: newMuscleGroup,
-        height: newHeight,
-        goal: newGoal,
-      };
-      await updateDoc(userDoc, newFields);
-      navigate("/");
-    }
-  };
-  const [confirm, setConfirm] = useState(false);
-  const [deleteclick, setDeleteClick] = useState(false);
+if(checkAll()){
+const userDoc=doc(db,"User",userValues[conectedUser].id)
+const newFields={userName: newUserName,
+  firstName: newFirstName,
+  lastName: newLastName,
+  password: newPassword,
+  verifyPassword: newVerifyPassword,
+  date: newDate,
+  email: newEmail,
+  gender: newGender,
+  weight: newWeight,
+  difficulty: newDifficulty,
+  exerciseType: newExerciseType,
+  muscleGroup: newMuscleGroup,
+  height: newHeight,
+  goal: newGoal,
+}
+await updateDoc(userDoc,newFields)
+ navigate('/')
 
-  const deleteUser = async () => {
-    setDeleteClick(true);
-    if (confirm) {
-      const userDoc = doc(db, "User", userValues[conectedUser]?.id);
-      await deleteDoc(userDoc);
-      navigate("/");
-    }
-  };
+}
+}
+// const [confirm,setConfirm]=useState(false);
+const [deleteclick,setDeleteClick]=useState(false);
 
-  const ErrorTypography = styled(Typography)({
+
+const deleteUser=async(confirm)=>{
+    setDeleteClick(true)
+    if(confirm===1){
+    const userDoc=doc(db,"User",userValues[conectedUser]?.id)
+    await deleteDoc(userDoc)
+    const progressDoc=doc(db,"Progress",userProgress[conectedUser]?.id)
+    await deleteDoc(progressDoc)
+    setIsOnline(false);
+    navigate("/")
+    }
+    else if(confirm===2){
+        setDeleteClick(false)
+    }
+}
+const ErrorTypography = styled(Typography)({
     color: "red",
   });
 
@@ -214,6 +220,7 @@ function EditPage() {
         )}
 
         <TextField
+        defaultValue={userValues[conectedUser].userName}
           sx={{ m: 1 }}
           color="primary"
           align="center"
@@ -227,6 +234,7 @@ function EditPage() {
         )}
 
         <TextField
+        defaultValue={userValues[conectedUser].password}
           placeholder="Password"
           sx={{ m: 1 }}
           color="primary"
@@ -240,6 +248,7 @@ function EditPage() {
           <ErrorTypography>Password name is required</ErrorTypography>
         )}
         <TextField
+        defaultValue={userValues[conectedUser].verifyPassword}
           placeholder="Verify password"
           sx={{ m: 1 }}
           color="primary"
@@ -254,6 +263,7 @@ function EditPage() {
         )}
 
         <TextField
+        defaultValue={userValues[conectedUser].date}
           type="date"
           sx={{ m: 1 }}
           color="primary"
@@ -266,6 +276,7 @@ function EditPage() {
         )}
 
         <TextField
+        defaultValue={userValues[conectedUser].email}
           sx={{ m: 1 }}
           color="primary"
           placeholder="E-mail"
@@ -311,6 +322,7 @@ function EditPage() {
         </Box>
 
         <TextField
+        defaultValue={userValues[conectedUser].height}
           placeholder="Height cm"
           label="Height cm"
           sx={{ m: 1 }}
@@ -320,6 +332,7 @@ function EditPage() {
           }}
         />
         <TextField
+        defaultValue={userValues[conectedUser].weight}
           placeholder="Weight KG"
           label="Weight KG"
           sx={{ m: 1 }}
@@ -338,6 +351,7 @@ function EditPage() {
         <FormControl sx={{ minWidth: 150 }}>
           <InputLabel>Difficulty</InputLabel>
           <Select
+          defaultValue={userValues[conectedUser].difficulty}
             sx={{ m: 1 }}
             placeholder="Difficulty"
             onChange={(event) => {
@@ -401,6 +415,7 @@ function EditPage() {
         <FormControl sx={{ minWidth: 150 }}>
           <InputLabel>Muscle type</InputLabel>
           <Select
+          defaultValue={userValues[conectedUser].muscleGroup}
             name="muscle-group"
             label="choose a muscle"
             onChange={(event) => {
@@ -444,27 +459,12 @@ function EditPage() {
           Approve
         </Button>
 
-        {/* {userValues?.map((user, index) => {
-              return (
-                <div key={index}>
-                  <h1>{user.userName}</h1>
-                  <h1>{user.password}</h1>
-                </div>
-              );
-            })}
-            {userIndex?.map((user, index) => {
-              return (
-                <div key={index}>
-                  <h1>{user.userIndex}</h1>
-                </div>
-              );
-            })} */}
 
         <Button
           color="error"
           variant="contained"
           className="left button-delete"
-          onClick={() => deleteUser()}
+          onClick={() => deleteUser(0)}
         >
           Delelte user
         </Button>
@@ -475,7 +475,7 @@ function EditPage() {
             variant="outlined"
             size="small"
             sx={{ m: 1 }}
-            onClick={() => setConfirm(true)}
+            onClick={() => deleteUser(1)}
           >
             Yes
           </Button>
@@ -486,7 +486,7 @@ function EditPage() {
             variant="outlined"
             size="small"
             sx={{ m: 1 }}
-            onClick={() => setConfirm(false)}
+            onClick={() => deleteUser(2)}
           >
             No
           </Button>

@@ -39,7 +39,7 @@ export default function ContextData() {
         };
         getUsersProgress();
 
-    }, []);
+    }, );
 
 
 

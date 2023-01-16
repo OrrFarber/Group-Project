@@ -9,7 +9,6 @@ import LoginPage from "./pages/LoginPage";
 import WorkoutExercises from "./pages/WorkoutExercises";
 import WorkoutDetails from "./pages/WorkoutDetails";
 import Nowhere from "./pages/404";
-
 import { useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { createContext } from "react";
@@ -57,117 +56,138 @@ function App() {
   console.log(userValues[conectedUser]?.isOnline);
   return (
     <UserContext.Provider value={contextValue}>
-      <div className="App" style={{minHeight:"100vh"}}>
-      <Box >
-        <Toolbar
-          color="inherit"
-          position="sticky"
-          sx={{
-            backgroundColor: "black",
-            top: 0,
-            width: "100vw",
-          }}
-        >
-          <FitnessCenterIcon color="primary" />
-          <Button
-            LinkComponent={NavLink}
-            to="/"
-            sx={{ m: 2}}
-            size="small"
-            fullWidth="true"
-            color="primary"
+      <div className="App" style={{ minHeight: "100vh" }}>
+        <Box>
+          <Toolbar
+            color="inherit"
+            position="sticky"
+            sx={{
+              backgroundColor: "black",
+              top: 0,
+              width: "100vw",
+            }}
           >
-            Home
-          </Button>
-          {!isOnline && (
+            <FitnessCenterIcon color="primary" />
             <Button
               LinkComponent={NavLink}
+              to="/"
               sx={{ m: 2 }}
               size="small"
               fullWidth="true"
               color="primary"
-              to="/LoginPage"
             >
-              Login
+              Home
             </Button>
-          )}
-          <Button
-            LinkComponent={NavLink}
-            sx={{ m: 2 }}
-            size="small"
-            fullWidth="true"
-            color="primary"
-            to="/FirstSignIn"
-          >
-            Sign up
-          </Button>
-          {isOnline && (
+
+            {!isOnline && (
+              <Button
+                LinkComponent={NavLink}
+                sx={{ m: 2 }}
+                size="small"
+                fullWidth="true"
+                color="primary"
+                to="/LoginPage"
+              >
+                Login
+              </Button>
+            )}
+
             <Button
               LinkComponent={NavLink}
+              to="/"
               sx={{ m: 2 }}
               size="small"
               fullWidth="true"
               color="primary"
-              to={`/WorkoutExercises/${userValues[conectedUser]?.firstName}`}
             >
-              Workout Exercises
+              Home
             </Button>
-          )}
-          {/* <Button
-            className="navlink"
-            LinkComponent={NavLink}
-            sx={{ m: 2 }}
-            size="small"
-            fullWidth="true"
-            color="primary"
-            to="/WorkoutDetails"
-          >
-            Workout Details
-          </Button> */}
-          <Button
-            LinkComponent={NavLink}
-            sx={{ m: 2 }}
-            size="small"
-            fullWidth="true"
-            color="primary"
-            to="/Chart"
-          >
-            Progress Chart
-          </Button>
-          <Button
-            LinkComponent={NavLink}
-            sx={{ m: 2 }}
-            size="small"
-            fullWidth="true"
-            color="primary"
-            to="/EditPage"
-          >
-            Edit Page
-          </Button>
-        </Toolbar>
-         
-        <div>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/LoginPage" element={<LoginPage />} />
-            <Route
-              path="/WorkoutExercises/:userName"
-              element={<WorkoutExercises />}
-            />
-            <Route
-    
-              path="/WorkoutDetails/:WorkoutName"
-              element={<WorkoutDetails />}
-            />
-            <Route path="/FirstSignIn" element={<FirstSignIn />} />
-            <Route path="/Chart" element={<Chart />} />
-            <Route path="/EditPage" element={<EditPage />} />
-            <Route path="*" element={<Nowhere />} />
-          </Routes>
-        </div>
-        
-        <Footer className="footer"/>
-      </Box>
+
+            {!isOnline && (
+              <Button
+                LinkComponent={NavLink}
+                sx={{ m: 2 }}
+                size="small"
+                fullWidth="true"
+                color="primary"
+                to="/FirstSignIn"
+              >
+                Sign up
+              </Button>
+            )}
+            {isOnline && (
+              <Button
+                LinkComponent={NavLink}
+                sx={{ m: 2 }}
+                size="small"
+                fullWidth="true"
+                color="primary"
+                to={`/WorkoutExercises/${userValues[conectedUser]?.firstName}`}
+              >
+                Workout Exercises
+              </Button>
+            )}
+
+            {isOnline && (
+              <Button
+                className="navlink"
+                LinkComponent={NavLink}
+                sx={{ m: 2 }}
+                size="small"
+                fullWidth="true"
+                color="primary"
+                to="/WorkoutDetails"
+              >
+                Workout Details
+              </Button>
+            )}
+            {isOnline && (
+              <Button
+                LinkComponent={NavLink}
+                sx={{ m: 2 }}
+                size="small"
+                fullWidth="true"
+                color="primary"
+                to="/Chart"
+              >
+                Progress Chart
+              </Button>
+            )}
+            {isOnline && (
+              <Button
+                LinkComponent={NavLink}
+                sx={{ m: 2 }}
+                size="small"
+                fullWidth="true"
+                color="primary"
+                to="/EditPage"
+              >
+                Edit Page
+              </Button>
+            )}
+          </Toolbar>
+
+          <div>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/LoginPage" element={<LoginPage />} />
+              <Route
+                path="/WorkoutExercises/:userName"
+                element={<WorkoutExercises />}
+              />
+              <Route
+                path="/WorkoutDetails/:WorkoutName"
+                element={<WorkoutDetails />}
+              />
+              <Route path="/FirstSignIn" element={<FirstSignIn />} />
+              <Route path="/Chart" element={<Chart />} />
+              <Route path="/EditPage" element={<EditPage />} />
+              <Route path="*" element={<Nowhere />} />
+            </Routes>
+          </div>
+
+          <Footer className="footer" />
+        </Box>
       </div>
     </UserContext.Provider>
   );

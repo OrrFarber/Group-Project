@@ -19,16 +19,14 @@ export default function Chart() {
   const [isLoading, setIsLoading] = useState(true);
   const [stepBar, setStepBar] = useState(true);
   const date = new Date();
-  const fullDate = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()}`;
+  const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   let dt;
 
   useEffect(() => {
     setIsLoading(true);
     if (!userProgress.length || !userValues.length || !conectedUser)
       return setIsLoading(true);
-    console.log(userProgress, userValues, conectedUser);
+    console.log(userProgress, userValues, conectedUser, "this");
     const tempUser = userProgress.find(
       (item) => userValues[conectedUser].userName == item.userName
     );
@@ -115,8 +113,8 @@ export default function Chart() {
     console.log(sum);
     return sum;
   }
-  let height = data.length * 5;
-  let symbolSize = data.length * 6;
+  let height = dataUser.length * 5;
+  let symbolSize = dataUser.length * 6;
   // console.log(data);
   // console.log(list);
   // console.log(dataUser + "asd")
@@ -127,7 +125,7 @@ export default function Chart() {
   //     }
   // }
   const steps = [
-    "grate start",
+    "great start",
     "5 more ",
     "you got it",
     "3 left",
@@ -238,8 +236,9 @@ export default function Chart() {
               },
             ]}
           />
-        </>
+          </>
       )}
+      
       <Box sx={{ width: "100%" }}>
         <Stepper activeStep={stepBar} alternativeLabel>
           {steps.map((label) => (

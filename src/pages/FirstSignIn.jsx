@@ -1,5 +1,4 @@
 import { React, useContext, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { UserContext } from "../App";
 import { redirect, useNavigate } from "react-router";
 import { db } from "../firebase/config";
@@ -108,7 +107,25 @@ function FirstSignIn() {
     return false;
   };
   const checkWeight = () => {
-    if (newWeight) {
+    if (newWeight>40&&newWeight<200) {
+      return true;
+    }
+    return false;
+  };
+  const checkHeight = () => {
+    if (newHeight>40&&newHeight<230) {
+      return true;
+    }
+    return false;
+  };
+  const checkMuscleGroup = () => {
+    if (newMuscleGroup) {
+      return true;
+    }
+    return false;
+  };
+  const checkExerciseType = () => {
+    if (newExerciseType) {
       return true;
     }
     return false;
@@ -122,17 +139,19 @@ function FirstSignIn() {
       checkVerifyPassword() &&
       checkDate() &&
       checkEmail() &&
-      checkDiffuculty()
+      checkDiffuculty()&&
+      checkHeight()&&
+      checkWeight
     );
   };
-
+  useEffect(()=>{
+    setNewUserIndex(userValues.length)
+  },)
   const createUser = async () => {
     setClick(true);
-    setNewIsOnline(false);
-
-    setNewUserIndex(userValues.length);
-    if (checkAll()) {
-      await addDoc(userCollectionRef, {
+    setNewIsOnline(false);   
+    if(checkAll()){
+      (await addDoc(userCollectionRef, {
         userName: newUserName,
         firstName: newFirstName,
         lastName: newLastName,
@@ -149,7 +168,7 @@ function FirstSignIn() {
         goal: newGoal,
         isOnline: false,
         userIndex: newUserIndex,
-      });
+      }))
       await addDoc(progressCollectionRef, {
         userName: newUserName,
         progress: [],
@@ -319,6 +338,9 @@ function FirstSignIn() {
             setNewHeight(event.target.value);
           }}
         />
+        {click && !checkHeight() && (
+          <ErrorTypography>Height is required</ErrorTypography>
+        )}
         <TextField
           placeholder="Weight KG"
           label="Weight KG"
@@ -368,7 +390,7 @@ function FirstSignIn() {
           name="exercise-type"
           className="exercise type"
         >
-          Chose the exercise type:
+          Choose the exercise type:
         </Typography>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel>Exercise type</InputLabel>
@@ -442,6 +464,7 @@ function FirstSignIn() {
         >
           Sign Up
         </Button>
+        
       </Box>
     </Paper>
   );
