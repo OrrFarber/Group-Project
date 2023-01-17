@@ -10,6 +10,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import { BoxLegendSvg } from '@nivo/legends'
 
 export default function Chart() {
   const { userProgress, userValues, conectedUser, ApiWorkouts } =
@@ -19,7 +20,9 @@ export default function Chart() {
   const [isLoading, setIsLoading] = useState(true);
   const [stepBar, setStepBar] = useState(true);
   const date = new Date();
-  const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const fullDate = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
   let dt;
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export default function Chart() {
     StepBar(dt);
     GetMuch(dt, "2023");
     setIsLoading(false);
-    console.log(conectedUser, "1", userProgress, "2", userValues, "3")
+    console.log(conectedUser, "1", userProgress, "2", userValues, "3");
 
     // asd
   }, [conectedUser, userProgress, userValues]);
@@ -43,13 +46,13 @@ export default function Chart() {
   // dsf
   function StepBar(dt) {
     const tempArr = dt.find((item) => (item.date = fullDate));
-    if (!tempArr.workouts.length) {
+    if (!tempArr?.workouts.length) {
       setStepBar(0);
     } else {
       console.log(tempArr, "this");
-      setStepBar(tempArr.workouts.length);
+      setStepBar(tempArr?.workouts.length);
     }
-    if (tempArr.workouts.length > 7) {
+    if (tempArr?.workouts.length > 7) {
       setStepBar(7);
     }
   }
@@ -113,7 +116,7 @@ export default function Chart() {
     console.log(sum);
     return sum;
   }
-  let height = dataUser.length * 5 / 2;
+  let height = (dataUser.length * 5) / 2;
   let symbolSize = 20;
   // console.log(data);
   // console.log(list);
@@ -133,125 +136,150 @@ export default function Chart() {
     "the last one",
     "no pain no gain",
   ];
+
+ 
+
   return (
     <div style={{ height: `${height}vw`, width: "100vw", maxHeight: "90vh" }}>
       {/* <p>{getMonthToChart}</p> */}
-      {isLoading ? (
-        <Typography sm={{ p: 16 }}>Loading</Typography>
+
+      {!userProgress[conectedUser].progress ? (
+        <h1>You have not done any progress yet</h1>
       ) : (
         <>
-          <button onClick={() => GetMuch(DataProgressUser, "2023")}>
-            clcickkck
-          </button>
-          <Box sx={{
-            width: "100%", display:
-              "flex", justifyContent: "center", padding: "5vw"
-          }}>
-            <Stepper activeStep={stepBar} alternativeLabel sx={{ width: "80%" }}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel color="white">{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
-          {/* {console.log(monthGraph)} */}
-          <Typography variant="h3" color="primary.dark" marginBottom={"2vw"}>
-            Monthly workouts by muscle:
-          </Typography>
-          <ResponsiveBar
-            // asd
-            data={dataUser}
-            keys={[
-              "abdominals",
-              "abductors",
-              "biceps",
-              "calves",
-              "chest",
-              "forearms",
-              "glutes",
-              "hamstrings",
-              "lats",
-              "lower_back",
-              "middle_back",
-              "neck",
-              "quadriceps",
-              "traps",
-              "triceps",
-            ]}
-            indexBy="date"
-            margin={{ top: 50, right: 130, bottom: 50, left: 100 }}
-            padding={0.3}
-            groupMode="stacked"
-            layout="horizontal"
-            valueScale={{ type: "linear" }}
-            indexScale={{ type: "band", round: true }}
-            colors={{ scheme: "paired" }}
-            borderColor={{
-              from: "color",
-              modifiers: [["darker", 1.6]],
-            }}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "Date of exercise",
-              legendPosition: "middle",
-              legendOffset: 32,
-            }}
-            axisLeft={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "",
-              legendPosition: "middle",
-              legendOffset: -30,
-            }}
-            labelSkipWidth={"12rem"}
-            labelSkipHeight={"12rem"}
-            labelTextColor={{
-              from: "color",
-              modifiers: [["darker", 1.6]],
-            }}
-            role="application"
-            ariaLabel="Nivo bar chart demo"
-            barAriaLabel={function (e) {
-              return (
-                e.id + ": " + e.formattedValue + " in country: " + e.indexValue
-              );
-            }}
-            legends={[
-              {
-                dataFrom: "keys",
-                anchor: "top",
-                direction: "row",
-                // wrap: "wrap",
-                justify: true,
-                translateX: -26,
-                translateY: -38,
-                itemsSpacing: 0,
-                itemWidth: 63,
-                itemHeight: 35,
-                itemDirection: "top-to-bottom",
-                itemOpacity: 0.85,
-                symbolSize: `${symbolSize}`,
-                effects: [
+          {isLoading ? (
+            <Typography sm={{ p: 16 }}>Loading</Typography>
+          ) : (
+            <>
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  padding: "5vw",
+                }}
+              >
+                <Stepper
+                  activeStep={stepBar}
+                  alternativeLabel
+                  sx={{ width: "80%" }}
+                >
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel color="white">{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </Box>
+              {/* {console.log(monthGraph)} */}
+              <Typography
+                variant="h3"
+                color="primary.dark"
+                marginBottom={"2vw"}
+              >
+                Monthly workouts by muscle:
+              </Typography>
+              <ResponsiveBar
+                // asd
+                data={dataUser}
+                keys={[
+                  "abdominals",
+                  "abductors",
+                  "biceps",
+                  "calves",
+                  "chest",
+                  "forearms",
+                  "glutes",
+                  "hamstrings",
+                  "lats",
+                  "lower_back",
+                  "middle_back",
+                  "neck",
+                  "quadriceps",
+                  "traps",
+                  "triceps",
+                ]}
+              
+                  
+
+                indexBy="date"
+                margin={{ top: 50, right: 130, bottom: 50, left: 100 }}
+                padding={0.3}
+                groupMode="stacked"
+                layout="horizontal"
+                valueScale={{ type: "linear" }}
+                indexScale={{ type: "band", round: true }}
+                colors={{ scheme: "paired" }}
+                borderColor={{
+                  from: "color",
+                  modifiers: [["darker", 1.6]],
+                }}
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                  legend: "Date of exercise",
+                  legendPosition: "middle",
+                  legendOffset: 32,
+                }}
+                axisLeft={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                  legend: "",
+                  legendPosition: "middle",
+                  legendOffset: -30,
+                }}
+                labelSkipWidth={"12rem"}
+                labelSkipHeight={"12rem"}
+                labelTextColor={{
+                  from: "color",
+                  modifiers: [["darker", 1.6]],
+                }}
+                role="application"
+                ariaLabel="Nivo bar chart demo"
+                barAriaLabel={function (e) {
+                  return (
+                    e.id +
+                    ": " +
+                    e.formattedValue +
+                    " in country: " +
+                    e.indexValue
+                  );
+                }}
+                legends={[
                   {
-                    on: "hover",
-                    style: {
-                      itemOpacity: 1,
-                    },
+                    dataFrom: "keys",
+                    anchor: "top",
+                    direction: "row",
+                    // wrap: "wrap",
+                    justify: true,
+                    translateX: -26,
+                    translateY: -38,
+                    itemsSpacing: 0,
+                    itemWidth: 63,
+                    itemHeight: 35,
+                    itemDirection: "top-to-bottom",
+                    itemOpacity: 0.85,
+                    symbolSize: `${symbolSize}`,
+                    effects: [
+                      {
+                        on: "hover",
+                        style: {
+                          itemOpacity: 1,
+                        },
+                      },
+                      
+                    ],
                   },
-                ],
-              },
-            ]}
-          />
+                ]}
+              />
+            </>
+          )}
         </>
       )}
-
-
     </div>
   );
 }

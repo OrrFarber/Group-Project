@@ -301,8 +301,8 @@ body {
 
 
 .BbodyF path:nth-child(1) {
-    stroke-dasharray: 17655.259765625;
-    stroke-dashoffset: 17655.259765625;
+    stroke-dasharray: 1000.259765625;
+    /* stroke-dashoffset: 17655.259765625; */
     stroke: black;
     stroke-width: 1.5s;
     animation: Fline-anim 20s ease forwards;
