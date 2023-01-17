@@ -16,7 +16,6 @@ import { Toolbar, Button, Box } from "@mui/material";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import axios from "axios";
 import { useNavigate, } from "react-router-dom";
-
 export const UserContext = createContext();
 
 function App() {
@@ -118,16 +117,7 @@ function App() {
             }}
           >
             <FitnessCenterIcon color="primary" />
-            <Button
-              LinkComponent={NavLink}
-              to="/"
-              sx={{ m: 2 }}
-              size="small"
-              fullWidth="true"
-              color="primary"
-            >
-              Home
-            </Button>
+          
 
             {!isOnline && (
               <Button
@@ -178,7 +168,7 @@ function App() {
               </Button>
             )}
 
-            {isOnline && (
+             {1===0 && (
               <Button
                 className="navlink"
                 LinkComponent={NavLink}
@@ -221,22 +211,22 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage UserWorkoutss={UserWorkoutss} setDif={setDif} setMus={setMus} bb={bb} setbb={setbb} />} />
               <Route path="/LoginPage" element={<LoginPage />} />
-              <Route
+              {isOnline &&<Route
                 path="/WorkoutExercises/:userName"
                 element={<WorkoutExercises UserWorkoutss={UserWorkoutss} setDif={setDif} setMus={setMus} apiWork={apiWork} />}
-              />
-              <Route
+              />}
+             <Route
                 path="/WorkoutDetails/:WorkoutName"
                 element={<WorkoutDetails />}
               />
               <Route path="/FirstSignIn" element={<FirstSignIn />} />
-              <Route path="/Chart" element={<Chart />} />
+             {userProgress[conectedUser] && <Route path="/Chart" element={<Chart />} />}
               <Route path="/EditPage" element={<EditPage />} />
               <Route path="*" element={<Nowhere />} />
             </Routes>
           </div>
-
-          {/* <Footer className="footer" /> */}
+                <div className="blank"></div>
+           <Footer className="footer" /> 
         </Box>
       </div>
     </UserContext.Provider>

@@ -67,6 +67,14 @@ export default function HomePage({ UserWorkoutss, setMus, setDif, apiWork, bb, s
               <Typography color="primary" variant="h6" >
                 Choose from hundreds of workouts, healthy recipes,
                 relaxing meditations, and expert articles, for a whole body and mind approach to feeling great.
+                
+I did a two - hour workout in the gym.
+She does a 20-minute workout every morning.
+
+<br/>
+Give your upper body a workout by using handweights.
+The team had a hard workout this morning.
+
               </Typography>
             </CardContent>
           </CardActionArea>

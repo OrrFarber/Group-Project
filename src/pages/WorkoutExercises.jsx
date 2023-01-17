@@ -40,62 +40,62 @@ function WorkoutExercises({ UserWorkoutss, setMus, setDif, apiWork }) {
                 Chose the difficulty level of the exercise:{" "}
             </Typography>
 
-            <InputLabel>Difficulty</InputLabel>
-            <Select
-                sx={{ m: 1 }}
-                placeholder="Difficulty"
-                onChange={(event) => {
-                    setDif(event.target.value);
-                }}
-            >
-                <MenuItem color="primary" value="">
-                    None
-                </MenuItem>
-                <MenuItem color="primary" value="beginner">
-                    beginner
-                </MenuItem>
-                <MenuItem color="primary" value="intermediate">
-                    intermediate
-                </MenuItem>
-                <MenuItem color="primary" value="expert">
-                    expert
-                </MenuItem>
-            </Select>
+      <InputLabel>Difficulty</InputLabel>
+      <Select
+        sx={{ m: 1, minWidth:170 }}
+        placeholder="Difficulty"
+        onChange={(event) => {
+          setDif(event.target.value);
+        }}
+      >
+        <MenuItem color="primary" value="none">
+          None
+        </MenuItem>
+        <MenuItem color="primary" value="beginner">
+          beginner
+        </MenuItem>
+        <MenuItem color="primary" value="intermediate">
+          intermediate
+        </MenuItem>
+        <MenuItem color="primary" value="expert">
+          expert
+        </MenuItem>
+      </Select>
 
-            <Typography
-                variant="h6"
-                color="primary"
-                name="muscle-group"
-                className="exercise type"
-            >
-                Chose muscle group targeted by the exercise:
-            </Typography>
-            <InputLabel>Muscle type</InputLabel>
-            <Select
-                name="muscle-group"
-                label="choose a muscle"
-                onChange={(event) => {
-                    setMus(event.target.value);
-                }}
-            >
-                <MenuItem value="">none</MenuItem>
-                <MenuItem value="abdominals">abdominals</MenuItem>
-                <MenuItem value="abductors">abductors</MenuItem>
-                <MenuItem value="adductors">adductors</MenuItem>
-                <MenuItem value="biceps">biceps</MenuItem>
-                <MenuItem value="calves">calves</MenuItem>
-                <MenuItem value="chest">chest</MenuItem>
-                <MenuItem value="forearms">forearms</MenuItem>
-                <MenuItem value="glutes">glutes</MenuItem>
-                <MenuItem value="hamstrings">hamstrings</MenuItem>
-                <MenuItem value="lats">lats</MenuItem>
-                <MenuItem value="lower_back">lowerback </MenuItem>
-                <MenuItem value="middle_back">middleback </MenuItem>
-                <MenuItem value="neck">neck </MenuItem>
-                <MenuItem value="quadriceps">quadriceps </MenuItem>
-                <MenuItem value="traps">traps </MenuItem>
-                <MenuItem value="triceps">triceps </MenuItem>
-            </Select>
+      <Typography
+        variant="h6"
+        color="primary"
+        name="muscle-group"
+        className="exercise type"
+      >
+        Chose muscle group targeted by the exercise:
+      </Typography>
+      <InputLabel>Muscle type</InputLabel>
+      <Select
+      sx={{minWidth:120}}
+        name="muscle-group"
+        label="choose a muscle"
+        onChange={(event) => {
+          setMus(event.target.value);
+        }}
+      >
+        <MenuItem value="abdominals">abdominals</MenuItem>
+        <MenuItem value="abductors">abductors</MenuItem>
+        <MenuItem value="adductors">adductors</MenuItem>
+        <MenuItem value="biceps">biceps</MenuItem>
+        <MenuItem value="calves">calves</MenuItem>
+        <MenuItem value="chest">chest</MenuItem>
+        <MenuItem value="forearms">forearms</MenuItem>
+        <MenuItem value="glutes">glutes</MenuItem>
+        <MenuItem value="hamstrings">hamstrings</MenuItem>
+        <MenuItem value="lats">lats</MenuItem>
+        <MenuItem value="lower_back">lowerback </MenuItem>
+        <MenuItem value="middle_back">middleback </MenuItem>
+        <MenuItem value="neck">neck </MenuItem>
+        <MenuItem value="quadriceps">quadriceps </MenuItem>
+        <MenuItem value="traps">traps </MenuItem>
+        <MenuItem value="triceps">triceps </MenuItem>
+      </Select>
 
             <Box sx={{ minHeight: "98vh" }}>
                 <Typography variant="h3" color="primary.dark" display="block">

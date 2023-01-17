@@ -192,6 +192,7 @@ const ErrorTypography = styled(Typography)({
         </Typography>
 
         <TextField
+           defaultValue={userValues[conectedUser].userName}
           sx={{ m: 1 }}
           placeholder="User name"
           color="primary"
@@ -206,6 +207,7 @@ const ErrorTypography = styled(Typography)({
         )}
 
         <TextField
+          defaultValue={userValues[conectedUser].firstName}
           sx={{ m: 1 }}
           placeholder="First name"
           color="primary"
@@ -220,7 +222,7 @@ const ErrorTypography = styled(Typography)({
         )}
 
         <TextField
-        defaultValue={userValues[conectedUser].userName}
+        defaultValue={userValues[conectedUser].lastName}
           sx={{ m: 1 }}
           color="primary"
           align="center"
