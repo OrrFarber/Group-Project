@@ -68,16 +68,7 @@ function App() {
             }}
           >
             <FitnessCenterIcon color="primary" />
-            <Button
-              LinkComponent={NavLink}
-              to="/"
-              sx={{ m: 2 }}
-              size="small"
-              fullWidth="true"
-              color="primary"
-            >
-              Home
-            </Button>
+          
 
             {!isOnline && (
               <Button
